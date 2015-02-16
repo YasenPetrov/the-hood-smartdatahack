@@ -6,6 +6,7 @@ package com.example.android.thehood;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseTwitterUtils;
 
 public class TheHood extends Application {
