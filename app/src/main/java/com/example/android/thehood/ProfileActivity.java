@@ -69,7 +69,11 @@ public class ProfileActivity extends Activity {
 
                     Intent addressInputIntent = new Intent(v.getContext(), UserAddressInput.class);
                     startActivity(addressInputIntent);
-
+                }
+                else
+                {
+                    Intent mainPageIntent = new Intent(v.getContext(),MainPage.class);
+                    startActivity(mainPageIntent);
                 }
             }
         });
