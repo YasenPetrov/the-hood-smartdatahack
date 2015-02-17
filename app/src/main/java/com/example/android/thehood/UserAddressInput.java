@@ -20,7 +20,7 @@ public class UserAddressInput extends FragmentActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private ParseUser currentUser;
     private Button mSubmitLocationButton;
-    LatLng mapMarkerCoordinates;
+    LatLng savedMarkerCoordinates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +34,11 @@ public class UserAddressInput extends FragmentActivity {
         mSubmitLocationButton.setVisibility(View.INVISIBLE);
 
         if(savedInstanceState!=null){
-            if(savedInstanceState.containsKey("mapMarkerCoordinates")){
-                LatLng savedMarkerCoordinates = savedInstanceState.getParcelable("mapMarkerCoordinates");
+            if(savedInstanceState.containsKey("savedMarkerCoordinates")){
+                savedMarkerCoordinates = savedInstanceState.getParcelable("savedMarkerCoordinates");
                 if(savedMarkerCoordinates != null){
                     mMap.addMarker(new MarkerOptions().position(savedMarkerCoordinates));
+                    setUpSubmitButton(savedMarkerCoordinates);
                 }
             }
         }
@@ -51,7 +52,7 @@ public class UserAddressInput extends FragmentActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable("mapMarkerCoordinates", mapMarkerCoordinates);
+        outState.putParcelable("savedMarkerCoordinates", savedMarkerCoordinates);
         super.onSaveInstanceState(outState);
     }
 
@@ -98,25 +99,30 @@ public class UserAddressInput extends FragmentActivity {
                 mMap.clear();
                 // Add a marker at the clicked location
                 mMap.addMarker(new MarkerOptions().position(latLng));
-                mapMarkerCoordinates = latLng;
 
+                //saving coordinates for bundle
+                savedMarkerCoordinates = latLng;
                 // Make a GeoPoint object to pass to the Parse server
-                final ParseGeoPoint userAddress = new ParseGeoPoint(latLng.latitude, latLng.longitude);
-
                 // Make button visible
-                mSubmitLocationButton.setVisibility(View.VISIBLE);
-                mSubmitLocationButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Save the current location as the user's address
-                        currentUser.put("Address", userAddress);
-                        currentUser.saveInBackground();
-                        Intent intent = new Intent(v.getContext(), MainPage.class);
-                        startActivity(intent);
-                    }
-                });
+                setUpSubmitButton(latLng);
 
+            }
+        });
+    }
 
+    private void setUpSubmitButton(LatLng latLng){
+        final ParseGeoPoint userAddress = new ParseGeoPoint(latLng.latitude, latLng.longitude);
+
+        mSubmitLocationButton.setVisibility(View.VISIBLE);
+        mSubmitLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save the current location as the user's address
+                currentUser.put("Address", userAddress);
+                currentUser.saveInBackground();
+                Intent intent = new Intent(v.getContext(), MainPage.class);
+                UserAddressInput.this.finish();
+                startActivity(intent);
             }
         });
     }
