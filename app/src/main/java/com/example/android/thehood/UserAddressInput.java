@@ -1,5 +1,6 @@
 package com.example.android.thehood;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -101,6 +102,8 @@ public class UserAddressInput extends FragmentActivity {
                         // Save the current location as the user's address
                         currentUser.put("Address", userAddress);
                         currentUser.saveInBackground();
+                        Intent intent = new Intent(v.getContext(), MainPage.class);
+                        startActivity(intent);
                     }
                 });
 
