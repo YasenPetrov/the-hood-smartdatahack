@@ -72,6 +72,7 @@ public class ProfileActivity extends Activity {
                 }
                 else
                 {
+                    //Launches the main page if we already have an address
                     Intent mainPageIntent = new Intent(v.getContext(),MainPage.class);
                     startActivity(mainPageIntent);
                 }
