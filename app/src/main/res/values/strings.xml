@@ -7,4 +7,7 @@
     <string name="profile_logout_button_label">Log out</string>
     <string name="profile_title_logged_out">You must be logged in to view your profile</string>
     <string name="profile_login_button_label">Log in</string>
+    <string name="launch_app_button_label">Launch app</string>
+    <string name="title_activity_user_address_input">Map</string>
+
 </resources>
