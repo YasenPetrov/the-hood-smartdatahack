@@ -65,6 +65,10 @@
             android:name=".UserAddressInput"
             android:label="@string/title_activity_user_address_input" >
         </activity>
+        <activity
+            android:name=".MainPage"
+            android:label="@string/title_activity_main_page" >
+        </activity>
     </application>
 
 </manifest>

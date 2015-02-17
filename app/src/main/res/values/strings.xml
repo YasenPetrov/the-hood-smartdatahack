@@ -9,5 +9,8 @@
     <string name="profile_login_button_label">Log in</string>
     <string name="launch_app_button_label">Launch app</string>
     <string name="title_activity_user_address_input">Map</string>
+    <string name="title_activity_main_page">MainPage</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
