@@ -41,6 +41,7 @@ public class HoodPost extends ParseObject {
     {
         put("radius",R);
     }
+
     public int getRadius()
     {
         return getInt("radius");
