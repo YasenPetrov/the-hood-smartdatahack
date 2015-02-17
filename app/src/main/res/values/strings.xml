@@ -18,5 +18,12 @@
     <string name="select_location_label">Please tell us where you live</string>
     <string name="submit_location_button_label">This is my location</string>
     <string name="title_activity_post">PostActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pick_start_time">Start time</string>
+    <string name="pick_end_time">End time</string>
+    <string name="pick_start_date">Start date</string>
+    <string name="pick_end_date">End date</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
 
 </resources>
