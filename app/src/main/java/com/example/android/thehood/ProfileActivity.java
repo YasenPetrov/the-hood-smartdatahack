@@ -73,7 +73,7 @@ public class ProfileActivity extends Activity {
                 else
                 {
                     String pgp = currentUser.getParseGeoPoint("Address").toString();
-                    Log.v(LOG_TAG, "GeoPoint1: " + pgp);
+                    Log.v(LOG_TAG, "GeoPoint: " + pgp);
                     //Launches the main page if we already have an address
                     Intent mainPageIntent = new Intent(v.getContext(),MainPage.class);
                     startActivity(mainPageIntent);

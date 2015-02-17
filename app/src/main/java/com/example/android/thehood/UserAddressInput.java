@@ -107,9 +107,9 @@ public class UserAddressInput extends FragmentActivity {
                 setUpSubmitButton(latLng);
 
             }
-            }
-        );
+        });
     }
+
     private void setUpSubmitButton(LatLng latLng){
         final ParseGeoPoint userAddress = new ParseGeoPoint(latLng.latitude, latLng.longitude);
 
