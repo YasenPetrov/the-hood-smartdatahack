@@ -2,21 +2,39 @@ package com.example.android.thehood;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
+
 
 public class UserAddressInput extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
+    private ParseUser currentUser;
+    private Button mSubmitLocationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        currentUser = ParseUser.getCurrentUser();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_address_input);
         setUpMapIfNeeded();
+
+        // Get submit button and make it invisible until a user puts a marker
+        mSubmitLocationButton = (Button) findViewById(R.id.submit_location_button);
+        mSubmitLocationButton.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -24,6 +42,7 @@ public class UserAddressInput extends FragmentActivity {
         super.onResume();
         setUpMapIfNeeded();
     }
+
 
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
@@ -60,6 +79,29 @@ public class UserAddressInput extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                // Add a marker at the clicked location
+                mMap.addMarker(new MarkerOptions().position(latLng));
+
+                // Make a GeoPoint object to pass to the Parse server
+                final ParseGeoPoint userAddress = new ParseGeoPoint(latLng.latitude, latLng.longitude);
+
+                // Make button visible
+                mSubmitLocationButton.setVisibility(View.VISIBLE);
+                mSubmitLocationButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Save the current location as the user's address
+                        currentUser.put("Address", userAddress);
+                        currentUser.saveInBackground();
+                    }
+                });
+
+
+            }
+        });
     }
 }
