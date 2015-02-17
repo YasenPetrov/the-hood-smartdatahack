@@ -6,6 +6,7 @@
     <string name="profile_title_logged_in">Your are logged in as</string>
     <string name="profile_logout_button_label">Log out</string>
     <string name="profile_title_logged_out">You must be logged in to view your profile</string>
+    <string name="get_location_from_gps_label">Get my location from GPS</string>
     <string name="profile_login_button_label">Log in</string>
     <string name="launch_app_button_label">Launch app</string>
     <string name="title_activity_user_address_input">Map</string>
@@ -15,7 +16,7 @@
     <string name="write_post">Write your post here</string>
     <string name="send_post">Post</string>
     <string name="post">Post</string>
-    <string name="select_location_label">Please tell us where you live</string>
+    <string name="select_location_label">Select your location</string>
     <string name="submit_location_button_label">This is my location</string>
     <string name="title_activity_post">PostActivity</string>
 

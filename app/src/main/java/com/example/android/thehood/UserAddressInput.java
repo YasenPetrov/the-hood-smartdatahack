@@ -1,11 +1,16 @@
 package com.example.android.thehood;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -20,6 +25,7 @@ public class UserAddressInput extends FragmentActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private ParseUser currentUser;
     private Button mSubmitLocationButton;
+    private Button mGPSLocationButton;
     LatLng savedMarkerCoordinates;
 
     @Override
@@ -32,6 +38,43 @@ public class UserAddressInput extends FragmentActivity {
         // Get submit button and make it invisible until a user puts a marker
         mSubmitLocationButton = (Button) findViewById(R.id.submit_location_button);
         mSubmitLocationButton.setVisibility(View.INVISIBLE);
+        mGPSLocationButton = (Button) findViewById(R.id.gps_location_button);
+        mGPSLocationButton.setVisibility(View.INVISIBLE);
+        //GPS stuff
+        final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        if ( manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            mMap.setMyLocationEnabled(true);
+            mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+                @Override
+                public boolean onMyLocationButtonClick() {
+                    Location location = manager.getLastKnownLocation(manager.PASSIVE_PROVIDER);
+                    if (location != null) {
+                        double longitude = location.getLongitude();
+                        double latitude = location.getLatitude();
+                        LatLng latLng = new LatLng(latitude, longitude);
+                        savedMarkerCoordinates = latLng;
+                        mMap.clear();
+                        // Add a marker at the clicked location
+                        mMap.addMarker(new MarkerOptions().position(latLng));
+                        mSubmitLocationButton.setVisibility(View.VISIBLE);
+
+                        //final ParseGeoPoint userAddress = new ParseGeoPoint(latitude, longitude);
+                        Log.v(LOG_TAG, "Lat from GPS: " + String.valueOf(latitude));
+                        Log.v(LOG_TAG, "Lon from GPS: " + String.valueOf(longitude));
+                        //currentUser.put("Address", userAddress);
+                        //currentUser.saveInBackground();
+                        //Intent intent = new Intent(UserAddressInput.this, MainPage.class);
+                        //UserAddressInput.this.finish();
+                        //startActivity(intent);
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, (float) 15.0));
+                    } else {
+                        Log.v(LOG_TAG, "No last known location from GPS, try again.");
+                         //does not get zoomed in to user loc
+                    }
+                    return true;
+                };
+            });
+        }
 
         if(savedInstanceState!=null){
             if(savedInstanceState.containsKey("savedMarkerCoordinates")){
@@ -123,6 +166,32 @@ public class UserAddressInput extends FragmentActivity {
                 Intent intent = new Intent(v.getContext(), MainPage.class);
                 UserAddressInput.this.finish();
                 startActivity(intent);
+            }
+        });
+    }
+    private void setUpGPSButton(){
+        mGPSLocationButton.setVisibility(View.INVISIBLE);
+        mGPSLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+                //check if GPS enabled TODO
+                //manager.requestSingleUpdate();
+                Location location = manager.getLastKnownLocation(manager.PASSIVE_PROVIDER);
+                if (location != null) {
+                    double longitude = location.getLongitude();
+                    double latitude = location.getLatitude();
+                    final ParseGeoPoint userAddress = new ParseGeoPoint(latitude, longitude);
+                    Log.v(LOG_TAG, "Lat from GPS: " + String.valueOf(latitude));
+                    Log.v(LOG_TAG, "Lon from GPS: " + String.valueOf(longitude));
+                    currentUser.put("Address", userAddress);
+                    currentUser.saveInBackground();
+                    Intent intent = new Intent(v.getContext(), MainPage.class);
+                    UserAddressInput.this.finish();
+                    startActivity(intent);
+                } else {
+                    Log.v(LOG_TAG, "No last known location from GPS, try again.");
+                }
             }
         });
     }

@@ -23,13 +23,27 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="75dp" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/submit_location_button_label"
-        android:id="@+id/submit_location_button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="59dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal|bottom">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/submit_location_button_label"
+            android:id="@+id/submit_location_button"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/get_location_from_gps_label"
+            android:id="@+id/gps_location_button"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="5dp" />
+    </LinearLayout>
 
 </RelativeLayout>
