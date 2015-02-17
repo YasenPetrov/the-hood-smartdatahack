@@ -1,32 +1,26 @@
 package com.example.android.thehood;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
-
-import java.util.Date;
 
 
 public class UserAddressInput extends FragmentActivity {
 
+    private String LOG_TAG = UserAddressInput.class.getSimpleName();
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private ParseUser currentUser;
     private Button mSubmitLocationButton;
+    LatLng mapMarkerCoordinates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +32,15 @@ public class UserAddressInput extends FragmentActivity {
         // Get submit button and make it invisible until a user puts a marker
         mSubmitLocationButton = (Button) findViewById(R.id.submit_location_button);
         mSubmitLocationButton.setVisibility(View.INVISIBLE);
+
+        if(savedInstanceState!=null){
+            if(savedInstanceState.containsKey("mapMarkerCoordinates")){
+                LatLng savedMarkerCoordinates = savedInstanceState.getParcelable("mapMarkerCoordinates");
+                if(savedMarkerCoordinates != null){
+                    mMap.addMarker(new MarkerOptions().position(savedMarkerCoordinates));
+                }
+            }
+        }
     }
 
     @Override
@@ -46,6 +49,11 @@ public class UserAddressInput extends FragmentActivity {
         setUpMapIfNeeded();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("mapMarkerCoordinates", mapMarkerCoordinates);
+        super.onSaveInstanceState(outState);
+    }
 
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
@@ -90,6 +98,7 @@ public class UserAddressInput extends FragmentActivity {
                 mMap.clear();
                 // Add a marker at the clicked location
                 mMap.addMarker(new MarkerOptions().position(latLng));
+                mapMarkerCoordinates = latLng;
 
                 // Make a GeoPoint object to pass to the Parse server
                 final ParseGeoPoint userAddress = new ParseGeoPoint(latLng.latitude, latLng.longitude);
