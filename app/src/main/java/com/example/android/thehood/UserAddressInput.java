@@ -56,7 +56,7 @@ public class UserAddressInput extends FragmentActivity {
                         mMap.clear();
                         // Add a marker at the clicked location
                         mMap.addMarker(new MarkerOptions().position(latLng));
-                        mSubmitLocationButton.setVisibility(View.VISIBLE);
+                        setUpSubmitButton(latLng);
 
                         //final ParseGeoPoint userAddress = new ParseGeoPoint(latitude, longitude);
                         Log.v(LOG_TAG, "Lat from GPS: " + String.valueOf(latitude));
