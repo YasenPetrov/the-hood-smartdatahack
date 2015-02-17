@@ -121,6 +121,7 @@ public class UserAddressInput extends FragmentActivity {
                 currentUser.put("Address", userAddress);
                 currentUser.saveInBackground();
                 Intent intent = new Intent(v.getContext(), MainPage.class);
+                UserAddressInput.this.finish();
                 startActivity(intent);
             }
         });
