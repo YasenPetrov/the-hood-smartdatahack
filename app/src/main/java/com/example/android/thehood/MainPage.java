@@ -1,15 +1,22 @@
 package com.example.android.thehood;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.parse.ParseQueryAdapter;
 
 
 public class MainPage extends Activity {
+
+    private Button mPostButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +27,17 @@ public class MainPage extends Activity {
         adapter.setTextKey("text");
         ListView postsListView = (ListView) this.findViewById(R.id.posts_listview);
         postsListView.setAdapter(adapter);
+
+        mPostButton = (Button) findViewById(R.id.post_button);
+        mPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent postIntent = new Intent(v.getContext(), PostActivity.class);
+                startActivity(postIntent);
+            }
+        });
+
+
     }
 
     @Override
