@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/com_parse_ui_vertical_margin"
     android:paddingLeft="@dimen/com_parse_ui_horizontal_margin"
@@ -41,9 +41,16 @@
             style="@style/ParseLoginUI.TextView" />
 
         <Button
+            style="@style/ParseLoginUI.Button"
+            android:layout_marginTop="@dimen/com_parse_ui_large_vertical_spacing"
+            android:text="@string/launch_app_button_label"
+            android:id="@+id/launch_app_button"/>
+
+        <Button
             android:id="@+id/login_or_logout_button"
             style="@style/ParseLoginUI.Button"
             android:layout_marginTop="@dimen/com_parse_ui_large_vertical_spacing"
             android:text="@string/profile_logout_button_label"/>
+
     </LinearLayout>
 </LinearLayout>
