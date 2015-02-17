@@ -18,6 +18,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
+import java.util.Date;
+
 
 public class UserAddressInput extends FragmentActivity {
 
@@ -83,6 +85,8 @@ public class UserAddressInput extends FragmentActivity {
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
+                // remove last marker
+                mMap.clear();
                 // Add a marker at the clicked location
                 mMap.addMarker(new MarkerOptions().position(latLng));
 
