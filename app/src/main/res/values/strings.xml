@@ -12,5 +12,8 @@
     <string name="title_activity_main_page">MainPage</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="write_post">Write your post here</string>
+    <string name="send_post">Post</string>
+    <string name="post">Post</string>
 
 </resources>
