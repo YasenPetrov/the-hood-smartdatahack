@@ -1,17 +1,26 @@
 package com.example.android.thehood;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import com.parse.ParseQueryAdapter;
 
 
-public class MainPage extends ActionBarActivity {
+public class MainPage extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page2);
+        setContentView(R.layout.activity_main_page);
+        //Loads all posts
+        ParseQueryAdapter<HoodPost> adapter = new ParseQueryAdapter<HoodPost>(this, HoodPost.class);
+        adapter.setTextKey("text");
+        ListView postsListView = (ListView) this.findViewById(R.id.posts_listview);
+        postsListView.setAdapter(adapter);
     }
 
 

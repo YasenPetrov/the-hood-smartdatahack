@@ -67,7 +67,11 @@
         </activity>
         <activity
             android:name=".MainPage"
-            android:label="@string/title_activity_main_page" >
+            android:label="@string/title_activity_main_page"
+            android:parentActivityName=".ProfileActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.thehood.ProfileActivity" />
         </activity>
     </application>
 
