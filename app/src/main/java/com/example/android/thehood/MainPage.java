@@ -3,6 +3,7 @@ package com.example.android.thehood;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.parse.ParseQueryAdapter;
 
 
 public class MainPage extends Activity {
+    private String LOG_TAG = MainPage.class.getSimpleName();
 
     private Button mEventButton;
     private Button mPostButton;
@@ -46,6 +48,29 @@ public class MainPage extends Activity {
         });
 
     }
+
+    @Override
+    protected void onResume() {
+        ParseQueryAdapter<HoodPost> adapter = new ParseQueryAdapter<HoodPost>(this, HoodPost.class);
+        adapter.setTextKey("title");
+        ListView postListView = (ListView) this.findViewById(R.id.posts_listview);
+        postListView.setAdapter(adapter);
+        Log.v(LOG_TAG, "Resumed");
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.v(LOG_TAG, "Paused");
+        super.onPause();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        Log.v(LOG_TAG,"onPostCreate");
+        super.onPostCreate(savedInstanceState);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

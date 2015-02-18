@@ -25,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -118,8 +119,13 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
         CreatePostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(createPost())
-                    getActivity().finish();
+                try {
+                    if(createPost())
+                        getActivity().finish();
+                } catch (ParseException e) {
+                    Log.v(LOG_TAG, "Post was not created");
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -130,7 +136,7 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
         et.setText(newText);
     }
 
-    private boolean createPost() {
+    private boolean createPost() throws ParseException {
         String title = ((TextView) getActivity().findViewById(R.id.title_input_fieldMessage))
                 .getText().toString();
         String description = ((TextView) getActivity()
@@ -146,15 +152,15 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
             int radius = Integer.parseInt(radiusString);
 
             // Make a new event, add it to the current user's posts_and_events
-            ParseObject event = new ParseObject("Post");
+            ParseObject post = new ParseObject("Post");
 
-            event.put("location", new ParseGeoPoint(eventLatLng.latitude, eventLatLng.longitude));
-            event.put("title", title);
-            event.put("text", description);
-            event.put("vivisbility_radius", radius);
-            event.put("author", currentUser);
-            currentUser.add("posts_and_events", event);
-            event.saveInBackground();
+            post.put("location", new ParseGeoPoint(eventLatLng.latitude, eventLatLng.longitude));
+            post.put("title", title);
+            post.put("text", description);
+            post.put("visibility_radius", radius);
+            post.put("author", currentUser);
+            currentUser.add("posts_and_events", post);
+            post.save();
             return true;
         }
         return false;
