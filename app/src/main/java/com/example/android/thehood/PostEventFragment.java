@@ -1,17 +1,14 @@
 package com.example.android.thehood;
 
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,32 +22,23 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.parse.Parse;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
-
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PostFragment#newInstance} factory method to
+ * Use the {@link PostEventFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PostFragment extends android.support.v4.app.Fragment {
+public class PostEventFragment extends android.support.v4.app.Fragment {
 
     private static final String LOG_TAG = "PostFragment says: ";
 
@@ -65,13 +53,13 @@ public class PostFragment extends android.support.v4.app.Fragment {
     private static Calendar startDate = Calendar.getInstance();
     private static Calendar endDate = Calendar.getInstance();
 
-    public PostFragment() {
+    public PostEventFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_post, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_post_event, container, false);
         registerViews(rootView);
         return rootView;
     }
@@ -128,8 +116,8 @@ public class PostFragment extends android.support.v4.app.Fragment {
         createEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createEvent();
-                getActivity().finish();
+                if(createEvent())
+                    getActivity().finish();
             }
         });
 
@@ -287,7 +275,7 @@ public class PostFragment extends android.support.v4.app.Fragment {
         et.setText(newText);
     }
 
-    private void createEvent() {
+    private boolean createEvent() {
         String title = ((TextView) getActivity().findViewById(R.id.title_input_field))
                 .getText().toString();
         String description = ((TextView) getActivity()
@@ -314,7 +302,9 @@ public class PostFragment extends android.support.v4.app.Fragment {
             event.put("author", currentUser);
             currentUser.add("posts_and_events", event);
             event.saveInBackground();
+            return true;
         }
+        return false;
     }
 
     private boolean validateEventData(String title, Calendar startDate, Calendar endDate,

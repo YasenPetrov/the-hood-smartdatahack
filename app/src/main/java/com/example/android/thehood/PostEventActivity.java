@@ -6,15 +6,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class PostActivity extends FragmentActivity {
+public class PostEventActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+        setContentView(R.layout.activity_post_event);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PostFragment())
+                    .add(R.id.container, new PostEventFragment())
                     .commit();
         }
     }
