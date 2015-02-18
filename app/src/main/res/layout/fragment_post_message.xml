@@ -94,7 +94,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/create_event"
+        android:text="@string/create_post"
         android:id="@+id/create_event_buttonMessage" />
 
 
