@@ -47,6 +47,8 @@ public class PostFragment extends android.support.v4.app.Fragment {
     private Calendar fromTime;
     private Calendar toTime;
     private SupportMapFragment mapFragment;
+    private GoogleMap mMap;
+    private LatLng eventLatLng;
 
     public PostFragment() {
     }
@@ -62,7 +64,7 @@ public class PostFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         FragmentManager fm = getChildFragmentManager();
         mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.post_map);
@@ -73,12 +75,33 @@ public class PostFragment extends android.support.v4.app.Fragment {
         mapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap map) {
+                mMap = map;
                 ParseGeoPoint eventGeoPoint = ParseUser.getCurrentUser().getParseGeoPoint("Address");
-                LatLng eventLatLng = new LatLng(eventGeoPoint.getLatitude(), eventGeoPoint.getLongitude());
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, (float) 14.5));
-                map.addMarker(new MarkerOptions().position(eventLatLng));
+                eventLatLng = new LatLng(eventGeoPoint.getLatitude(), eventGeoPoint.getLongitude());
+                if (savedInstanceState != null) {
+                    if (savedInstanceState.containsKey("eventLatLng")){
+                        eventLatLng = savedInstanceState.getParcelable("eventLatLng");
+                    }
+                }
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, (float) 14.5));
+                mMap.addMarker(new MarkerOptions().position(eventLatLng));
+
+                mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        mMap.clear();
+                        eventLatLng = latLng;
+                        mMap.addMarker(new MarkerOptions().position(latLng));
+                    }
+                });
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("eventLatLng", eventLatLng);
+        super.onSaveInstanceState(outState);
     }
 
     private void registerViews(View v) {
