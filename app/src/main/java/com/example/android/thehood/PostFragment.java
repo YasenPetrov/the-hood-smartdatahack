@@ -4,11 +4,12 @@ package com.example.android.thehood;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +17,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
+
 import java.util.Calendar;
-import java.util.Date;
+
 
 
 /**
@@ -36,6 +46,7 @@ public class PostFragment extends android.support.v4.app.Fragment {
     private Calendar toDate;
     private Calendar fromTime;
     private Calendar toTime;
+    private SupportMapFragment mapFragment;
 
     public PostFragment() {
     }
@@ -46,7 +57,28 @@ public class PostFragment extends android.support.v4.app.Fragment {
         Log.v(LOG_TAG, Calendar.getInstance().toString());
         View rootView = inflater.inflate(R.layout.fragment_post, container, false);
         registerViews(rootView);
+
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FragmentManager fm = getChildFragmentManager();
+        mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.post_map);
+        if (mapFragment == null) {
+            mapFragment = SupportMapFragment.newInstance();
+            fm.beginTransaction().replace(R.id.post_map, mapFragment).commit();
+        }
+        mapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap map) {
+                ParseGeoPoint eventGeoPoint = ParseUser.getCurrentUser().getParseGeoPoint("Address");
+                LatLng eventLatLng = new LatLng(eventGeoPoint.getLatitude(), eventGeoPoint.getLongitude());
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, (float) 14.5));
+                map.addMarker(new MarkerOptions().position(eventLatLng));
+            }
+        });
     }
 
     private void registerViews(View v) {
@@ -81,7 +113,6 @@ public class PostFragment extends android.support.v4.app.Fragment {
             }
         });
     }
-
 
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
@@ -132,4 +163,13 @@ public class PostFragment extends android.support.v4.app.Fragment {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");
     }
+
+
+    /**
+     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
+     * just add a marker near Africa.
+     * <p/>
+     * This should only be called once and when we are sure that {@link #mMap} is not null.
+     */
+
 }
