@@ -32,13 +32,13 @@
                 android:text="@string/from"
                 android:id="@+id/post_textview_from" />
 
-            <Button
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pick_start_date"
                 android:id="@+id/pick_start_date_button" />
 
-            <Button
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pick_start_time"
@@ -57,13 +57,13 @@
                 android:text="@string/to"
                 android:id="@+id/post_textview_to" />
 
-            <Button
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pick_end_date"
                 android:id="@+id/pick_end_date_button" />
 
-            <Button
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pick_end_time"

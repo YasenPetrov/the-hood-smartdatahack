@@ -10,7 +10,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 //The Class for our posts
-@ParseClassName("Posts")
+@ParseClassName("Post")
 public class HoodPost extends ParseObject {
 
     public String getText() {
