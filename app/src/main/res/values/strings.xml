@@ -26,5 +26,10 @@
     <string name="pick_end_date">End date</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="set_radius">Visible in a radius of</string>
+    <string name="radius_units">m</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="create_event">Create event</string>
 
 </resources>

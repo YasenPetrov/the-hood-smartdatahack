@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,12 +30,19 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.Parse;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 
 /**
@@ -46,15 +54,16 @@ public class PostFragment extends android.support.v4.app.Fragment {
 
     private static final String LOG_TAG = "PostFragment says: ";
 
-    private static Calendar startDate = Calendar.getInstance();
-    private static Calendar endDate = Calendar.getInstance();
     private SupportMapFragment mapFragment;
     private EditText pickStartTimeButton;
     private EditText pickEndTimeButton;
     private EditText pickStartDateButton;
     private EditText pickEndDateButton;
     private GoogleMap mMap;
+    // Variables to store the event details
     private LatLng eventLatLng;
+    private static Calendar startDate = Calendar.getInstance();
+    private static Calendar endDate = Calendar.getInstance();
 
     public PostFragment() {
     }
@@ -62,11 +71,11 @@ public class PostFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.v(LOG_TAG, Calendar.getInstance().toString());
         View rootView = inflater.inflate(R.layout.fragment_post, container, false);
         registerViews(rootView);
         return rootView;
     }
+
 
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
@@ -114,6 +123,15 @@ public class PostFragment extends android.support.v4.app.Fragment {
         pickEndTimeButton = (EditText) v.findViewById(R.id.pick_end_time_button);
         pickStartDateButton = (EditText) v.findViewById(R.id.pick_start_date_button);
         pickEndDateButton = (EditText) v.findViewById(R.id.pick_end_date_button);
+        Button createEventButton = (Button) v.findViewById(R.id.create_event_button);
+
+        createEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createEvent();
+                getActivity().finish();
+            }
+        });
 
         pickStartTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,7 +267,7 @@ public class PostFragment extends android.support.v4.app.Fragment {
                     endDate.set(Calendar.DAY_OF_MONTH, day);
                     break;
             }
-            String newText = "" + year + "/" + (month+1) + "/" + day;
+            String newText = "" + day + "/" + (month+1) + "/" + year;
             updateLabel((EditText) viewCalledFrom, newText);
         }
     }
@@ -269,6 +287,58 @@ public class PostFragment extends android.support.v4.app.Fragment {
         et.setText(newText);
     }
 
+    private void createEvent() {
+        String title = ((TextView) getActivity().findViewById(R.id.title_input_field))
+                .getText().toString();
+        String description = ((TextView) getActivity()
+                .findViewById(R.id.description_input_field))
+                .getText().toString();
+        String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_field))
+                        .getText().toString();
+
+        boolean valid = validateEventData(title,startDate, endDate, radiusString, description);
+
+        if(valid) {
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            int radius = Integer.parseInt(radiusString);
+
+            // Make a new event, add it to the current user's posts_and_events
+            ParseObject event = new ParseObject("Event");
+
+            event.put("location", new ParseGeoPoint(eventLatLng.latitude, eventLatLng.longitude));
+            event.put("title", title);
+            event.put("description", description);
+            event.put("startDate", startDate.getTime());
+            event.put("endDate", endDate.getTime());
+            event.put("vivisbility_radius", radius);
+            event.put("author", currentUser);
+            currentUser.add("posts_and_events", event);
+            event.saveInBackground();
+        }
+    }
+
+    private boolean validateEventData(String title, Calendar startDate, Calendar endDate,
+                                      String radius, String description) {
+        if(title.isEmpty()) {
+            Toast.makeText(getActivity(),"An event without a title? Come on...",Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        if(startDate.compareTo(endDate) >= 0 || startDate.compareTo(Calendar.getInstance()) < 0) {
+            Toast.makeText(getActivity(),"Time travellers not allowed",Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+
+        if(radius.isEmpty()) {
+            Toast.makeText(getActivity(),"Enter a radius, por favor",Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+
+        // TODO: Decide on a maximum radius and perform a validation on that
+        return true;
+    }
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.

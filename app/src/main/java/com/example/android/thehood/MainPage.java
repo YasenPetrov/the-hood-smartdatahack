@@ -22,7 +22,7 @@ public class MainPage extends Activity {
         setContentView(R.layout.activity_main_page);
         //Loads all posts
         ParseQueryAdapter<HoodPost> adapter = new ParseQueryAdapter<HoodPost>(this, HoodPost.class);
-        adapter.setTextKey("text");
+        adapter.setTextKey("title");
         ListView postsListView = (ListView) this.findViewById(R.id.posts_listview);
         postsListView.setAdapter(adapter);
 
