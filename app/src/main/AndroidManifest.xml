@@ -76,8 +76,12 @@
                 android:value="com.example.android.thehood.ProfileActivity" />
         </activity>
         <activity
-            android:name=".PostActivity"
+            android:name=".PostEventActivity"
             android:label="@string/title_activity_post" >
+        </activity>
+        <activity
+            android:name=".PostMessageActivity"
+            android:label="@string/title_activity_post_message" >
         </activity>
     </application>
 

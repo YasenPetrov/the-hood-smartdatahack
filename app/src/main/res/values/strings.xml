@@ -31,5 +31,7 @@
     <string name="description">Description</string>
     <string name="title">Title</string>
     <string name="create_event">Create event</string>
+    <string name="event">Event</string>
+    <string name="title_activity_post_message">PostMessageActivity</string>
 
 </resources>

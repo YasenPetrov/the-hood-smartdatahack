@@ -15,6 +15,7 @@ import com.parse.ParseQueryAdapter;
 public class MainPage extends Activity {
 
     private Button mPostButton;
+    private Button mPostButton1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +27,23 @@ public class MainPage extends Activity {
         ListView postsListView = (ListView) this.findViewById(R.id.posts_listview);
         postsListView.setAdapter(adapter);
 
-        mPostButton = (Button) findViewById(R.id.post_button);
+        mPostButton = (Button) findViewById(R.id.event_button);
         mPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent postIntent = new Intent(v.getContext(), PostActivity.class);
+                Intent postIntent = new Intent(v.getContext(), PostEventActivity.class);
                 startActivity(postIntent);
             }
         });
 
+        mPostButton1 = (Button) findViewById(R.id.post_button);
+        mPostButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent postIntent = new Intent(v.getContext(), PostMessageActivity.class);
+                startActivity(postIntent);
+            }
+        });
 
     }
 
