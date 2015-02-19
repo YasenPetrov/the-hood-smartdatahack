@@ -3,12 +3,10 @@ package com.example.android.thehood;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.Fragment;
-import android.content.SharedPreferences;
-import android.support.v4.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,12 +32,6 @@ import com.parse.ParseUser;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PostEventFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PostEventFragment extends android.support.v4.app.Fragment {
 
     private static final String LOG_TAG = "PostFragment says: ";
@@ -56,8 +48,9 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
     private static final SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
     // Variables to store the event details
     private LatLng eventLatLng;
-    private static Calendar startDate = Calendar.getInstance();
-    private static Calendar endDate = Calendar.getInstance();
+    //private static Calendar currentDate = Calendar.getInstance();
+    private static Calendar startDate; // = Calendar.getInstance();  //= Calendar.getInstance();
+    private static Calendar endDate; // = Calendar.getInstance(); // ;= Calendar.getInstance();
 
     public PostEventFragment() {
     }
@@ -169,28 +162,37 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the current set time as the default values for the picker
-            final Calendar c;
+            int hour;
+            int minute;
+
             switch (viewCalledFrom.getId()) {
                 case R.id.pick_start_time_button:
                     Log.v(LOG_TAG, "start time1");
-                    c = startDate;
+                    if (startDate == null) {
+                        setStartDate();
+                    }
+                    hour = startDate.get(Calendar.HOUR_OF_DAY);
+                    minute = startDate.get(Calendar.MINUTE);
                     break;
-                case R.id.pick_end_time_button:
+                default: //case R.id.pick_end_time_button:
                     Log.v(LOG_TAG, "end time!");
-                    c = endDate;
+                    if (endDate == null){
+                        setEndDate();
+                    }
+                    hour = endDate.get(Calendar.HOUR_OF_DAY);
+                    minute = endDate.get(Calendar.MINUTE);
                     break;
-                default:
-                    Log.v(LOG_TAG, "wtf?!");
-                    c = Calendar.getInstance();
+                //default:
+                //    Log.v(LOG_TAG, "wtf?!");
+                //    c = Calendar.getInstance();
             }
-
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
 
             // Create a new instance of TimePickerDialog and return it
             return new TimePickerDialog(getActivity(), this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
         }
+
+
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             String timeText = new String();
@@ -236,9 +238,15 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
             final Calendar c;
             switch (viewCalledFrom.getId()) {
                 case R.id.pick_start_date_button:
+                    if (startDate == null){
+                        setStartDate();
+                    }
                     c = startDate;
                     break;
                 case R.id.pick_end_date_button:
+                    if (endDate == null){
+                        setEndDate();
+                    }
                     c = endDate;
                     break;
                 default:
@@ -252,6 +260,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
+
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             String DateText = new String();
@@ -311,9 +320,9 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
             event.put("description", description);
             event.put("startDate", startDate.getTime());
             event.put("endDate", endDate.getTime());
-            event.put("vivisbility_radius", radius);
+            event.put("visibility_radius", radius);
             event.put("author", currentUser);
-            currentUser.add("posts_and_events", event);
+            currentUser.add("events", event);
             event.saveInBackground();
             return true;
         }
@@ -345,6 +354,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onResume() {
+        startDate = null;
         setDistanceUnits();
         super.onResume();
     }
@@ -353,4 +363,17 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         radiusUnitTextView.setText(Utility.getPreferredDistanceUnits(getActivity()));
     }
 
+    private static void setStartDate() {
+        startDate = Calendar.getInstance();
+        startDate.add(Calendar.MINUTE, 10);
+    }
+    private static void setEndDate() {
+        if (startDate == null){
+            endDate = Calendar.getInstance();
+        }
+        else {
+            endDate = (Calendar) startDate.clone();
+        }
+        endDate.add(Calendar.HOUR_OF_DAY, 1);
+    }
 }

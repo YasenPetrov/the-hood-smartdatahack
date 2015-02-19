@@ -152,19 +152,20 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                 .findViewById(R.id.description_input_fieldMessage))
                 .getText().toString();
         //want this to be double converted depending if MIles or KIlometres
+
         String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_fieldMessage))
                 .getText().toString();
+        double radius = Utility.formatDistance(getActivity(), radiusString); //returns 0.0 if empty string
 
         //gets the duration of a post from both spinners
         int duration = (Integer.parseInt(days_spinner.getSelectedItem().toString()))*24 +
                 Integer.parseInt(hours_spinner.getSelectedItem().toString());
         Log.v(LOG_TAG, String.valueOf(duration));
 
-        boolean valid = validatePostData(title, radiusString, description, duration);
+        boolean valid = validatePostData(title, radius, description, duration);
 
         if(valid) {
             ParseUser currentUser = ParseUser.getCurrentUser();
-            int radius = Integer.parseInt(radiusString);
 
             // Make a new event, add it to the current user's posts_and_events
             HoodPost post = new HoodPost();
@@ -174,7 +175,7 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
             post.setDescription(description);
             post.setRadius(radius);
             post.setAuthor(currentUser);
-            currentUser.add("posts_and_events", post);
+            currentUser.add("posts", post);
             //add date
             Calendar cal = Calendar.getInstance();
             //Date created_at = cal.getTime();
@@ -188,13 +189,13 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
     }
 
     private boolean validatePostData(String title, double radius, String description, int duration) {
-        if(title.isEmpty()) {
+        if (title.isEmpty()) {
             Toast.makeText(getActivity(), "An event without a title? Come on...", Toast.LENGTH_SHORT)
                     .show();
             return false;
         }
-        else if(radius.isEmpty() || radius == 0.0) {
-            Toast.makeText(getActivity(),"Enter a radius, por favor",Toast.LENGTH_SHORT)
+        else if (radius == 0.0) {
+            Toast.makeText(getActivity(),"Add a radius",Toast.LENGTH_SHORT)
                     .show();
             return false;
         }

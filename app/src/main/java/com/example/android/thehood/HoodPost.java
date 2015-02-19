@@ -3,7 +3,6 @@ package com.example.android.thehood;
 /**
  * Created by stiliyan on 15-2-17.
  */
-import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -30,8 +29,8 @@ public class HoodPost extends ParseObject {
         return getParseUser("author");
     }
 
-    public void setAuthor(ParseUser value) {
-
+    public void setAuthor(ParseUser user) {
+        put("author", user);
     }
 
     public ParseGeoPoint getLocation() {
@@ -41,13 +40,13 @@ public class HoodPost extends ParseObject {
         put("location", value);
     }
 
-    public void setRadius(int R)
+    public void setRadius(double R)
     {
-        put("visibility_radius",R);
+        put("visibility_radius", R);
     }
-    public int getRadius()
+    public double getRadius()
     {
-        return getInt("visibility_radius");
+        return getDouble("visibility_radius");
     }
 
     public Date getStartTime () { return getDate("created_at");}
