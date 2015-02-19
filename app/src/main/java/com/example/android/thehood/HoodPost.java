@@ -29,8 +29,9 @@ public class HoodPost extends ParseObject {
     public ParseUser getAuthor() {
         return getParseUser("author");
     }
-    public void setUser(ParseUser value) {
-        put("author", value);
+
+    public void setAuthor(ParseUser value) {
+
     }
 
     public ParseGeoPoint getLocation() {

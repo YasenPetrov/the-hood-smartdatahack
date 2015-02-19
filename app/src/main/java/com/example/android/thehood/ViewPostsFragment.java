@@ -21,6 +21,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,6 +42,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
     // A temp variable for the visibility of posts, we should really get it from sharedPrefs
     private int max_post_dist = 1;
     private ParseQueryAdapter<HoodPost> parseQueryAdapter;
+    private ParseUser mCurrentUser = ParseUser.getCurrentUser();
 
     public ViewPostsFragment() {
     }
@@ -67,13 +69,19 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
 
         parseQueryAdapter = new ParseQueryAdapter<HoodPost>(getActivity(), HoodPost.class) {
             @Override
-            public View getItemView(HoodPost post, View view, ViewGroup parent) {
+            public View getItemView(final HoodPost post, View view, ViewGroup parent) {
                 if (view == null) {
                     view = View.inflate(getContext(), R.layout.hood_post_item, null);
                 }
                 TextView postTextView = (TextView) view.findViewById(R.id.text_view);
                 TextView authorView = (TextView) view.findViewById(R.id.author_view);
+                TextView createdAtView = (TextView) view.findViewById(R.id.created_at_view);
+                final TextView commentView = (TextView) view.findViewById(R.id.comment_view);
+                Button commentButton = (Button) view.findViewById(R.id.comment_button);
+
                 ParseUser author = post.getAuthor();
+                final ParseUser currentUser = ParseUser.getCurrentUser();
+
                 String name = "";
                 try {
                     name = author.fetchIfNeeded().getString("name");
@@ -85,6 +93,32 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
 
                 postTextView.setText(post.getDescription());
                 authorView.setText(name);
+                createdAtView.setText(Utility.formatDate(post.getCreatedAt()));
+
+                commentButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        HoodComment comment = new HoodComment();
+
+                        comment.setText(commentView.getText().toString());
+                        comment.setAuthor(currentUser);
+                        comment.setPost(post);
+                        post.addComment(comment);
+                        currentUser.add("comments", comment);
+                        ArrayList<ParseObject> objectsToSave = new ArrayList<ParseObject>();
+                        objectsToSave.add(post);
+                        objectsToSave.add(comment);
+                        objectsToSave.add(currentUser);
+                        try {
+                            ParseObject.saveAll(objectsToSave);
+
+                        } catch(ParseException e) {
+                            e.printStackTrace();
+                        }
+                        commentView.setText("");
+
+                    }
+                });
                 return view;
             }
         };

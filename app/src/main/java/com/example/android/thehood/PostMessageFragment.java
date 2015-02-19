@@ -172,7 +172,7 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
             post.setTitle(title);
             post.setDescription(description);
             post.setRadius(radius);
-            post.setUser(currentUser);
+            post.setAuthor(currentUser);
             currentUser.add("posts_and_events", post);
             //add date
             Calendar cal = Calendar.getInstance();
@@ -205,6 +205,7 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
         else if (duration == 0){
             Toast.makeText(getActivity(),"Increase the duration", Toast.LENGTH_SHORT)
                     .show();
+            return false;
         }
         // TODO: Decide on a maximum radius and perform a validation on that
         return true;
