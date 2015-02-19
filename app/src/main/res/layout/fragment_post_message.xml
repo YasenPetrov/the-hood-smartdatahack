@@ -63,7 +63,8 @@
         <Spinner
             android:id="@+id/post_days_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -76,7 +77,8 @@
         <Spinner
             android:id="@+id/post_hours_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:spinnerMode="dialog" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -116,8 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/radius_units"
-            android:id="@+id/radius_units_textviewMessage"
+            android:id="@+id/radius_units_textview"
             android:layout_weight="1" />
     </LinearLayout>
 

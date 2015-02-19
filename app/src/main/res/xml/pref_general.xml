@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="@string/pref_units_key"
+        android:title="@string/pref_units_label"
+        android:defaultValue="@string/pref_units_imperial"
+        android:entryValues="@array/pref_units_values"
+        android:entries="@array/pref_units_options"
+        />
+    <EditTextPreference
+        android:key="@string/pref_radius_key"
+        android:title="@string/pref_radius_label"
+        android:defaultValue="@string/pref_radius_value"
+        android:inputType="number"
+        android:ems="10"
+        android:maxLength="3"
+        />
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+
+
+</PreferenceScreen>

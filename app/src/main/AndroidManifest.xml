@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.thehood" >
+    package="com.example.android.thehood">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -21,10 +21,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.AppCompat.Light">
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,7 +34,7 @@
         <activity
             android:name="com.parse.ui.ParseLoginActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop">
             <meta-data
                 android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_ENABLED"
                 android:value="true" />
@@ -65,27 +65,31 @@
 
         <activity
             android:name=".UserAddressInput"
-            android:label="@string/title_activity_user_address_input" >
-        </activity>
+            android:label="@string/title_activity_user_address_input"></activity>
         <activity
             android:name=".MainPage"
             android:label="@string/title_activity_main_page"
-            android:parentActivityName=".ProfileActivity" >
+            android:parentActivityName=".ProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.android.thehood.ProfileActivity" />
         </activity>
         <activity
             android:name=".PostEventActivity"
-            android:label="@string/title_activity_post" >
-        </activity>
+            android:label="@string/title_activity_post"></activity>
         <activity
             android:name=".PostMessageActivity"
-            android:label="@string/title_activity_post_message" >
-        </activity>
+            android:label="@string/title_activity_post_message"></activity>
         <activity
             android:name=".ViewPostsActivity"
-            android:label="@string/title_activity_view_posts" >
+            android:label="@string/title_activity_view_posts"></activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainPage">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.thehood.MainPage" />
         </activity>
     </application>
 

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -59,18 +60,11 @@ public class UserAddressInput extends FragmentActivity {
                         mMap.addMarker(new MarkerOptions().position(latLng));
                         setUpSubmitButton(latLng);
 
-                        //final ParseGeoPoint userAddress = new ParseGeoPoint(latitude, longitude);
                         Log.v(LOG_TAG, "Lat from GPS: " + String.valueOf(latitude));
                         Log.v(LOG_TAG, "Lon from GPS: " + String.valueOf(longitude));
-                        //currentUser.put("Address", userAddress);
-                        //currentUser.saveInBackground();
-                        //Intent intent = new Intent(UserAddressInput.this, MainPage.class);
-                        //UserAddressInput.this.finish();
-                        //startActivity(intent);
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MY_LOCATION_ZOOM));
                     } else {
-                        Log.v(LOG_TAG, "No last known location from GPS, try again.");
-                         //does not get zoomed in to user loc
+                        showNoLocationToast();
                     }
                     return true;
                 };
@@ -88,6 +82,11 @@ public class UserAddressInput extends FragmentActivity {
         }
     }
 
+    private void showNoLocationToast() {
+        Toast.makeText(this, "No GPS location found, try again", Toast.LENGTH_SHORT)
+                .show();
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -100,21 +99,6 @@ public class UserAddressInput extends FragmentActivity {
         super.onSaveInstanceState(outState);
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {

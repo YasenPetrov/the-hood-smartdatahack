@@ -65,7 +65,8 @@
                 android:clickable="false"
                 android:textIsSelectable="false"
                 android:focusableInTouchMode="false"
-                android:enabled="true" />
+                android:enabled="true"
+                android:textColor="#eca23b" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -76,7 +77,7 @@
                 android:clickable="false"
                 android:textIsSelectable="false"
                 android:focusableInTouchMode="false"
-                />
+                android:textColor="#eca23b" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,7 +101,7 @@
                 android:clickable="false"
                 android:textIsSelectable="false"
                 android:focusableInTouchMode="false"
-                />
+                android:textColor="#eca23b" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -111,7 +112,7 @@
                 android:clickable="false"
                 android:textIsSelectable="false"
                 android:focusableInTouchMode="false"
-                />
+                android:textColor="#eca23b" />
 
         </LinearLayout>
 
@@ -189,7 +190,8 @@
             android:layout_height="wrap_content"
             android:text="@string/create_event"
             android:id="@+id/create_event_button"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:background="#eca23b" />
     </LinearLayout>
 
 
