@@ -73,6 +73,8 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                 }
                 TextView postTextView = (TextView) view.findViewById(R.id.text_view);
                 TextView authorView = (TextView) view.findViewById(R.id.author_view);
+                TextView createdAtView = (TextView) view.findViewById(R.id.created_at_view);
+
                 ParseUser author = post.getAuthor();
                 String name = "";
                 try {
@@ -85,6 +87,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
 
                 postTextView.setText(post.getDescription());
                 authorView.setText(name);
+                createdAtView.setText(Utility.formatDate(post.getCreatedAt()));
                 return view;
             }
         };
