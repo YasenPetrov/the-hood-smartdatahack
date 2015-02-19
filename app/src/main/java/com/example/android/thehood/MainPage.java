@@ -47,6 +47,15 @@ public class MainPage extends Activity {
             }
         });
 
+        Button viewPostsButton = (Button) findViewById(R.id.view_posts_button);
+        viewPostsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewPostsIntent = new Intent(v.getContext(), ViewPostsActivity.class);
+                startActivity(viewPostsIntent);
+            }
+        });
+
     }
 
     @Override
