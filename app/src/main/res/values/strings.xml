@@ -43,6 +43,9 @@
     <string name="pref_units_label_imperial">Imperial</string>
     <string name="pref_units_metric">metric</string>
     <string name="pref_units_imperial">imperial</string>
+    <string name="pref_radius_key">radius</string>
+    <string name="pref_radius_label">Post Radius</string>
+    <string name="pref_radius_value">100</string>
 
 </resources>
 
