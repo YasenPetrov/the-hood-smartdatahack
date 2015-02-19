@@ -15,6 +15,8 @@ public class TheHood extends Application {
     public void onCreate() {
         super.onCreate();
         ParseObject.registerSubclass(HoodPost.class);
+        ParseObject.registerSubclass(HoodEvent.class);
+        ParseObject.registerSubclass(HoodComment.class);
         // Required - Initialize the Parse SDK
         Parse.initialize(this, getString(R.string.parse_app_id),
                 getString(R.string.parse_client_key));
