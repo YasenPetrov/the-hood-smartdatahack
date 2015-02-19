@@ -196,21 +196,20 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                     .show();
             return false;
         }
-        if(radius.isEmpty()) {
+        else if(radius.isEmpty()) {
             Toast.makeText(getActivity(),"Enter a radius, por favor",Toast.LENGTH_SHORT)
                     .show();
             return false;
         }
-        if (description.isEmpty()){
+        else if (description.isEmpty()){
             Toast.makeText(getActivity(),"Add a description", Toast.LENGTH_SHORT)
                     .show();
             return false;
         }
-        if (duration == 0){
+        else if (duration == 0){
             Toast.makeText(getActivity(),"Increase the duration", Toast.LENGTH_SHORT)
                     .show();
         }
-
         // TODO: Decide on a maximum radius and perform a validation on that
         return true;
     }
