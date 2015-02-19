@@ -46,7 +46,7 @@ public class HoodComment extends ParseObject {
         return getDate("updatedAt");
     }
 
-    public static ParseQuery<HoodPost> getQuery() {
-        return ParseQuery.getQuery(HoodPost.class);
+    public static ParseQuery<HoodComment> getQuery() {
+        return ParseQuery.getQuery(HoodComment.class);
     }
 }
