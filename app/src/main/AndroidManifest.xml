@@ -83,6 +83,10 @@
             android:name=".PostMessageActivity"
             android:label="@string/title_activity_post_message" >
         </activity>
+        <activity
+            android:name=".ViewPostsActivity"
+            android:label="@string/title_activity_view_posts" >
+        </activity>
     </application>
 
 </manifest>
