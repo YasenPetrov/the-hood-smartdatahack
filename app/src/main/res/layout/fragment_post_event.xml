@@ -38,6 +38,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/title_input_field"
                 android:maxLength="50"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionDone"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -130,7 +133,7 @@
             <EditText
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
-                android:maxLength="10"
+                android:maxLength="3"
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/radius_input_field"
@@ -161,10 +164,12 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
                 android:ems="10"
+                android:inputType="text"
                 android:id="@+id/description_input_field"
                 android:layout_weight="0.27"
+                android:scrollHorizontally="false"
+                android:imeOptions="actionDone"
                 android:height="100dp" />
 
         </LinearLayout>

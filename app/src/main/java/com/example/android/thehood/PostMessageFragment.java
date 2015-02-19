@@ -76,6 +76,10 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                 R.array.hours_array, android.R.layout.simple_spinner_item);
         hours_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hours_spinner.setAdapter(hours_adapter);
+        //
+        //TextView descriptionText = (TextView) rootView.findViewById(R.id.description_input_fieldMessage);
+        //descriptionText.setHorizontallyScrolling(false);
+        //descriptionText.setMaxLines(Integer.MAX_VALUE);
 
         return rootView;
     }
@@ -148,6 +152,7 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
     private boolean createPost() throws ParseException {
         String title = ((TextView) getActivity().findViewById(R.id.title_input_fieldMessage))
                 .getText().toString();
+
         String description = ((TextView) getActivity()
                 .findViewById(R.id.description_input_fieldMessage))
                 .getText().toString();
@@ -196,7 +201,12 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                     .show();
             return false;
         }
-        if(duration == 0){
+        if (description.isEmpty()){
+            Toast.makeText(getActivity(),"Add a description", Toast.LENGTH_SHORT)
+                    .show();
+            return false;
+        }
+        if (duration == 0){
             Toast.makeText(getActivity(),"Increase the duration", Toast.LENGTH_SHORT)
                     .show();
         }

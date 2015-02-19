@@ -38,6 +38,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/title_input_fieldMessage"
+                android:maxLines="1"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:maxLength="50"
                 android:layout_weight="1" />
         </LinearLayout>
 
@@ -103,6 +107,7 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
+            android:maxLength="3"
             android:id="@+id/radius_input_fieldMessage"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1" />
@@ -126,10 +131,13 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
+        android:inputType="text"
         android:ems="10"
         android:id="@+id/description_input_fieldMessage"
-        android:layout_weight="0.27" />
+        android:height="100dp"
+        android:layout_weight="0.27"
+        android:imeOptions="actionDone"
+        />
 
     <Button
         android:layout_width="fill_parent"
