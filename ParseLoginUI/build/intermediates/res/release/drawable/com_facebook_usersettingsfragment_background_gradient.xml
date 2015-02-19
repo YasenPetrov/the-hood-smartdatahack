@@ -21,8 +21,4 @@
       android:gradientRadius="495"
       android:type="radial"/>
 </shape>    
-<<<<<<< HEAD
 <!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/drawable/com_facebook_usersettingsfragment_background_gradient.xml --><!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/drawable/com_facebook_usersettingsfragment_background_gradient.xml -->
-=======
-<!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/drawable/com_facebook_usersettingsfragment_background_gradient.xml --><!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/drawable/com_facebook_usersettingsfragment_background_gradient.xml -->
->>>>>>> 788278b28dc71d85b08880aaf6193b7eba6c6f31

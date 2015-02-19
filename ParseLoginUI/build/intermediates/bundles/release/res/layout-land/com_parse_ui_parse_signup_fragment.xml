@@ -11,8 +11,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </ScrollView>
-<<<<<<< HEAD
 <!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/res/layout-land/com_parse_ui_parse_signup_fragment.xml -->
-=======
-<!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/res/layout-land/com_parse_ui_parse_signup_fragment.xml -->
->>>>>>> 788278b28dc71d85b08880aaf6193b7eba6c6f31
