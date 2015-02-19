@@ -5,4 +5,5 @@
     android:layout_height="match_parent"
     android:theme="@style/Base.Theme.AppCompat"
     tools:context="com.example.android.thehood.PostMessageActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:ignore="MergeRootFrame"
+    android:background="#ffffffff" />

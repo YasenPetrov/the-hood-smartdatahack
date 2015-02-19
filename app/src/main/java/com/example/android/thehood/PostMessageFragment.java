@@ -169,7 +169,7 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
             post.setTitle(title);
             post.setDescription(description);
             post.setRadius(radius);
-            post.setUser(currentUser);
+            post.setAuthor(currentUser);
             currentUser.add("posts_and_events", post);
             //add date
             Calendar cal = Calendar.getInstance();
