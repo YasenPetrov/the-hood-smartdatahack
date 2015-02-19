@@ -35,6 +35,8 @@ import java.util.Calendar;
 public class PostEventFragment extends android.support.v4.app.Fragment {
 
     private static final String LOG_TAG = "PostFragment says: ";
+    private static final int START_DELAY = 15;
+    private static final int SUGGESTED_DURATION = 60;
 
     private SupportMapFragment mapFragment;
     private EditText pickStartTimeButton;
@@ -49,8 +51,13 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
     // Variables to store the event details
     private LatLng eventLatLng;
     //private static Calendar currentDate = Calendar.getInstance();
-    private static Calendar startDate; // = Calendar.getInstance();  //= Calendar.getInstance();
+    private static Calendar startDate;// = Calendar.getInstance();
     private static Calendar endDate; // = Calendar.getInstance(); // ;= Calendar.getInstance();
+    private static boolean startDateSet;
+    private static boolean startTimeSet;
+    private static boolean endDateSet;
+    private static boolean endTimeSet;
+
 
     public PostEventFragment() {
     }
@@ -62,6 +69,9 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         registerViews(rootView);
         radiusUnitTextView = (TextView) rootView.findViewById(R.id.radius_units_textview);
         setDistanceUnits();
+        startDateSet = false; startTimeSet = false; endDateSet = false; endTimeSet = false;
+        setStartEndDates();
+
         return rootView;
     }
 
@@ -168,24 +178,15 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
             switch (viewCalledFrom.getId()) {
                 case R.id.pick_start_time_button:
                     Log.v(LOG_TAG, "start time1");
-                    if (startDate == null) {
-                        setStartDate();
-                    }
-                    hour = startDate.get(Calendar.HOUR_OF_DAY);
-                    minute = startDate.get(Calendar.MINUTE);
+                        hour = startDate.get(Calendar.HOUR_OF_DAY);
+                        minute = startDate.get(Calendar.MINUTE);
                     break;
-                default: //case R.id.pick_end_time_button:
+                default: //pick_end_time_button:
                     Log.v(LOG_TAG, "end time!");
-                    if (endDate == null){
-                        setEndDate();
-                    }
-                    hour = endDate.get(Calendar.HOUR_OF_DAY);
-                    minute = endDate.get(Calendar.MINUTE);
+                            hour = endDate.get(Calendar.HOUR_OF_DAY);
+                            minute = endDate.get(Calendar.MINUTE);
                     break;
-                //default:
-                //    Log.v(LOG_TAG, "wtf?!");
-                //    c = Calendar.getInstance();
-            }
+                    }
 
             // Create a new instance of TimePickerDialog and return it
             return new TimePickerDialog(getActivity(), this, hour, minute,
@@ -201,18 +202,16 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
                     startDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     startDate.set(Calendar.MINUTE, minute);
                     timeText = sdf_time.format(startDate.getTime());
-                    Log.v(LOG_TAG, startDate.toString());
+                    startTimeSet = true;
                     break;
-                case R.id.pick_end_time_button:
+                default:
                     endDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     endDate.set(Calendar.MINUTE, minute);
                     timeText = sdf_time.format(endDate.getTime());
+                    endTimeSet = true;
                     break;
-                default:
-                    Log.v(LOG_TAG, "What the actual fuck?!@!");
             }
 
-            //String newText = "" + hourOfDay + ":" + minute;
             updateLabel((EditText) viewCalledFrom, timeText);
         }
     }
@@ -238,19 +237,11 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
             final Calendar c;
             switch (viewCalledFrom.getId()) {
                 case R.id.pick_start_date_button:
-                    if (startDate == null){
-                        setStartDate();
-                    }
                     c = startDate;
                     break;
-                case R.id.pick_end_date_button:
-                    if (endDate == null){
-                        setEndDate();
-                    }
+                default:
                     c = endDate;
                     break;
-                default:
-                    c = Calendar.getInstance();
             }
 
             int year = c.get(Calendar.YEAR);
@@ -270,12 +261,14 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
                     startDate.set(Calendar.MONTH, month);
                     startDate.set(Calendar.DAY_OF_MONTH, day);
                     DateText = sdf_date.format(startDate.getTime());
+                    startDateSet = true;
                     break;
-                case R.id.pick_end_date_button:
+                default:
                     endDate.set(Calendar.YEAR, year);
                     endDate.set(Calendar.MONTH, month);
                     endDate.set(Calendar.DAY_OF_MONTH, day);
                     DateText = sdf_date.format(endDate.getTime());
+                    endDateSet = true;
                     break;
             }
             updateLabel((EditText) viewCalledFrom, DateText);
@@ -305,12 +298,12 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
                 .getText().toString();
         String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_field))
                         .getText().toString();
+        double radius = Utility.formatDistance(getActivity(), radiusString); //returns 0.0 if empty string
 
-        boolean valid = validateEventData(title,startDate, endDate, radiusString, description);
+        boolean valid = validateEventData(title, startDate, endDate, radius, description);
 
         if(valid) {
             ParseUser currentUser = ParseUser.getCurrentUser();
-            int radius = Integer.parseInt(radiusString);
 
             // Make a new event, add it to the current user's posts_and_events
             ParseObject event = new ParseObject("Event");
@@ -330,50 +323,43 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
     }
 
     private boolean validateEventData(String title, Calendar startDate, Calendar endDate,
-                                      String radius, String description) {
+                                      double radius, String description) {
         if(title.isEmpty()) {
             Toast.makeText(getActivity(),"An event without a title? Come on...",Toast.LENGTH_SHORT)
                     .show();
             return false;
-        }
-        if(startDate.compareTo(endDate) >= 0 || startDate.compareTo(Calendar.getInstance()) < 0) {
+        } else if (!(startDateSet && startTimeSet && endDateSet && endTimeSet)){
+            Toast.makeText(getActivity(),"Set all dates and times", Toast.LENGTH_SHORT)
+                .show();
+            return false;
+        } else if(startDate.after(endDate) || startDate.before(Calendar.getInstance())) {
             Toast.makeText(getActivity(),"Time travellers not allowed",Toast.LENGTH_SHORT)
                     .show();
             return false;
-        }
-
-        if(radius.isEmpty()) {
+        } else if (radius == 0.0) { //we might wanna to check for max radius
             Toast.makeText(getActivity(),"Enter a radius, por favor",Toast.LENGTH_SHORT)
                     .show();
             return false;
         }
-
-        // TODO: Decide on a maximum radius and perform a validation on that
         return true;
     }
 
     @Override
     public void onResume() {
-        startDate = null;
+        startDateSet = false; startTimeSet = false; endDateSet = false; endTimeSet = false;
         setDistanceUnits();
+        setStartEndDates();
         super.onResume();
+    }
+
+    private void setStartEndDates() {
+        startDate = Calendar.getInstance();
+        endDate = Calendar.getInstance();
+        startDate.add(Calendar.MINUTE, START_DELAY);
+        endDate.add(Calendar.MINUTE, START_DELAY + SUGGESTED_DURATION);
     }
 
     private void setDistanceUnits(){
         radiusUnitTextView.setText(Utility.getPreferredDistanceUnits(getActivity()));
-    }
-
-    private static void setStartDate() {
-        startDate = Calendar.getInstance();
-        startDate.add(Calendar.MINUTE, 10);
-    }
-    private static void setEndDate() {
-        if (startDate == null){
-            endDate = Calendar.getInstance();
-        }
-        else {
-            endDate = (Calendar) startDate.clone();
-        }
-        endDate.add(Calendar.HOUR_OF_DAY, 1);
     }
 }
