@@ -151,6 +151,7 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
         String description = ((TextView) getActivity()
                 .findViewById(R.id.description_input_fieldMessage))
                 .getText().toString();
+        //want this to be double converted depending if MIles or KIlometres
         String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_fieldMessage))
                 .getText().toString();
 
@@ -176,7 +177,7 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
             currentUser.add("posts_and_events", post);
             //add date
             Calendar cal = Calendar.getInstance();
-            Date created_at = cal.getTime();
+            //Date created_at = cal.getTime();
             cal.add(Calendar.HOUR_OF_DAY, duration);
             Date ends_at = cal.getTime();
             post.setEndTime(ends_at);
@@ -186,13 +187,13 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
         return false;
     }
 
-    private boolean validatePostData(String title, String radius, String description, int duration) {
+    private boolean validatePostData(String title, double radius, String description, int duration) {
         if(title.isEmpty()) {
             Toast.makeText(getActivity(), "An event without a title? Come on...", Toast.LENGTH_SHORT)
                     .show();
             return false;
         }
-        else if(radius.isEmpty()) {
+        else if(radius.isEmpty() || radius == 0.0) {
             Toast.makeText(getActivity(),"Enter a radius, por favor",Toast.LENGTH_SHORT)
                     .show();
             return false;
