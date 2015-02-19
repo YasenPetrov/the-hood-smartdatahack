@@ -163,21 +163,20 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
             int radius = Integer.parseInt(radiusString);
 
             // Make a new event, add it to the current user's posts_and_events
-            ParseObject post = new ParseObject("Post");
+            HoodPost post = new HoodPost();
 
-            post.put("location", new ParseGeoPoint(eventLatLng.latitude, eventLatLng.longitude));
-            post.put("title", title);
-            post.put("description", description);
-            post.put("visibility_radius", radius);
-            post.put("author", currentUser);
+            post.setLocation(new ParseGeoPoint(eventLatLng.latitude, eventLatLng.longitude));
+            post.setTitle(title);
+            post.setDescription(description);
+            post.setRadius(radius);
+            post.setUser(currentUser);
             currentUser.add("posts_and_events", post);
             //add date
             Calendar cal = Calendar.getInstance();
             Date created_at = cal.getTime();
             cal.add(Calendar.HOUR_OF_DAY, duration);
             Date ends_at = cal.getTime();
-            post.put("created_at", created_at);
-            post.put("ends_at", ends_at);
+            post.setEndTime(ends_at);
             post.save();
             return true;
         }
