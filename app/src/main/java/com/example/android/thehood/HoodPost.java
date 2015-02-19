@@ -28,7 +28,7 @@ public class HoodPost extends ParseObject {
         return getParseUser("author");
     }
 
-    public void setUser(ParseUser value) {
+    public void setAuthor(ParseUser value) {
         put("author", value);
     }
 
@@ -53,6 +53,7 @@ public class HoodPost extends ParseObject {
     public Date getStartTime () {
         return getDate("startTme");
     }
+
     public void setStartTime(Date d) {
         put("startTime", d);
     }
@@ -60,6 +61,7 @@ public class HoodPost extends ParseObject {
     public Date getEndTime () {
         return getDate("startTme");
     }
+
     public void setEndTime(Date d) {
         put("startTime", d);
     }
