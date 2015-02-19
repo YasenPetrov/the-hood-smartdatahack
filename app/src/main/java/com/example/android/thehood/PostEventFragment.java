@@ -30,6 +30,7 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -48,6 +49,8 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
     private EditText pickStartDateButton;
     private EditText pickEndDateButton;
     private GoogleMap mMap;
+    private static final SimpleDateFormat sdf_date = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
     // Variables to store the event details
     private LatLng eventLatLng;
     private static Calendar startDate = Calendar.getInstance();
@@ -63,7 +66,6 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         registerViews(rootView);
         return rootView;
     }
-
 
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
@@ -186,21 +188,25 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            String timeText = new String();
             switch (viewCalledFrom.getId()) {
                 case R.id.pick_start_time_button:
                     startDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     startDate.set(Calendar.MINUTE, minute);
+                    timeText = sdf_time.format(startDate.getTime());
                     Log.v(LOG_TAG, startDate.toString());
                     break;
                 case R.id.pick_end_time_button:
                     endDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     endDate.set(Calendar.MINUTE, minute);
+                    timeText = sdf_time.format(endDate.getTime());
                     break;
                 default:
                     Log.v(LOG_TAG, "What the actual fuck?!@!");
             }
-            String newText = "" + hourOfDay + ":" + minute;
-            updateLabel((EditText) viewCalledFrom, newText);
+
+            //String newText = "" + hourOfDay + ":" + minute;
+            updateLabel((EditText) viewCalledFrom, timeText);
         }
     }
 
@@ -243,20 +249,22 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
+            String DateText = new String();
             switch (viewCalledFrom.getId()) {
                 case R.id.pick_start_date_button:
                     startDate.set(Calendar.YEAR, year);
                     startDate.set(Calendar.MONTH, month);
                     startDate.set(Calendar.DAY_OF_MONTH, day);
+                    DateText = sdf_date.format(startDate.getTime());
                     break;
                 case R.id.pick_end_date_button:
                     endDate.set(Calendar.YEAR, year);
                     endDate.set(Calendar.MONTH, month);
                     endDate.set(Calendar.DAY_OF_MONTH, day);
+                    DateText = sdf_date.format(endDate.getTime());
                     break;
             }
-            String newText = "" + day + "/" + (month+1) + "/" + year;
-            updateLabel((EditText) viewCalledFrom, newText);
+            updateLabel((EditText) viewCalledFrom, DateText);
         }
     }
 

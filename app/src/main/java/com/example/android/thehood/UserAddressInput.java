@@ -27,6 +27,7 @@ public class UserAddressInput extends FragmentActivity {
     private Button mSubmitLocationButton;
     private Button mGPSLocationButton;
     LatLng savedMarkerCoordinates;
+    private final float MY_LOCATION_ZOOM = (float) 15.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class UserAddressInput extends FragmentActivity {
                         //Intent intent = new Intent(UserAddressInput.this, MainPage.class);
                         //UserAddressInput.this.finish();
                         //startActivity(intent);
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, (float) 15.0));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MY_LOCATION_ZOOM));
                     } else {
                         Log.v(LOG_TAG, "No last known location from GPS, try again.");
                          //does not get zoomed in to user loc

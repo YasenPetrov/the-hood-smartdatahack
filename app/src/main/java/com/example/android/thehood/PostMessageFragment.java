@@ -1,22 +1,17 @@
 package com.example.android.thehood;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.os.Bundle;
 import android.app.Fragment;
-import android.support.v4.app.DialogFragment;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,6 +26,7 @@ import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
+import java.util.Date;
 
 
 /**
@@ -59,6 +55,8 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
     private GoogleMap mMap;
     // Variables to store the event details
     private LatLng eventLatLng;
+    private static Spinner days_spinner;
+    private static Spinner hours_spinner;
 
     public PostMessageFragment() {
     }
@@ -68,6 +66,17 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_post_message, container, false);
         registerViews(rootView);
+        days_spinner = (Spinner) rootView.findViewById(R.id.post_days_spinner);
+        ArrayAdapter<CharSequence> days_adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.days_array, android.R.layout.simple_spinner_item);
+        days_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        days_spinner.setAdapter(days_adapter);
+        hours_spinner = (Spinner) rootView.findViewById(R.id.post_hours_spinner);
+        ArrayAdapter<CharSequence> hours_adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.hours_array, android.R.layout.simple_spinner_item);
+        hours_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        hours_spinner.setAdapter(hours_adapter);
+
         return rootView;
     }
 
@@ -144,8 +153,11 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                 .getText().toString();
         String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_fieldMessage))
                 .getText().toString();
+        int duration = (Integer.parseInt(days_spinner.getSelectedItem().toString()))*24 +
+                Integer.parseInt(hours_spinner.getSelectedItem().toString());
+        Log.v(LOG_TAG, String.valueOf(duration));
 
-        boolean valid = validatePostData(title, radiusString, description);
+        boolean valid = validatePostData(title, radiusString, description, duration);
 
         if(valid) {
             ParseUser currentUser = ParseUser.getCurrentUser();
@@ -156,17 +168,24 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
 
             post.put("location", new ParseGeoPoint(eventLatLng.latitude, eventLatLng.longitude));
             post.put("title", title);
-            post.put("text", description);
+            post.put("description", description);
             post.put("visibility_radius", radius);
             post.put("author", currentUser);
             currentUser.add("posts_and_events", post);
+            //add date
+            Calendar cal = Calendar.getInstance();
+            Date created_at = cal.getTime();
+            cal.add(Calendar.HOUR_OF_DAY, duration);
+            Date ends_at = cal.getTime();
+            post.put("created_at", created_at);
+            post.put("ends_at", ends_at);
             post.save();
             return true;
         }
         return false;
     }
 
-    private boolean validatePostData(String title, String radius, String description) {
+    private boolean validatePostData(String title, String radius, String description, int duration) {
         if(title.isEmpty()) {
             Toast.makeText(getActivity(), "An event without a title? Come on...", Toast.LENGTH_SHORT)
                     .show();
@@ -176,6 +195,10 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
             Toast.makeText(getActivity(),"Enter a radius, por favor",Toast.LENGTH_SHORT)
                     .show();
             return false;
+        }
+        if(duration == 0){
+            Toast.makeText(getActivity(),"Increase the duration", Toast.LENGTH_SHORT)
+                    .show();
         }
 
         // TODO: Decide on a maximum radius and perform a validation on that
