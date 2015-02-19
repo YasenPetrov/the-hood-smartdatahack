@@ -72,13 +72,16 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                 R.array.hours_array, android.R.layout.simple_spinner_item);
         hours_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hours_spinner.setAdapter(hours_adapter);
-
+        //TODO not correct needs to be fixed
+        //TextView distanceUnits = (TextView) rootView.findViewById(R.id.radius_units_textviewMessage);
+        //distanceUnits.setText(Utility.getPreferredDistanceUnits(getActivity()));
         return rootView;
     }
 
 
     @Override
     public void onActivityCreated(final Bundle savedInstanceState) {
+
         super.onActivityCreated(savedInstanceState);
         FragmentManager fm = getChildFragmentManager();
         mapFragment = (SupportMapFragment) fm.findFragmentById(R.id.post_mapMessage);
