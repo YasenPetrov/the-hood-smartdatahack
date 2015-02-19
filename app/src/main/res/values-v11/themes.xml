@@ -7,5 +7,9 @@
     <style name="AppBaseTheme" parent="android:Theme.Holo.NoActionBar">
         <!-- API 11 theme customizations can go here. -->
     </style>
+    <style name="AppCompatTheme" parent="Platform.AppCompat">
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        ...
+    </style>
 
 </resources>
