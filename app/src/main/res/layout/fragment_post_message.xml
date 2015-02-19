@@ -135,6 +135,7 @@
         android:ems="10"
         android:id="@+id/description_input_fieldMessage"
         android:height="100dp"
+        android:maxLength="200"
         android:layout_weight="0.27"
         android:imeOptions="actionDone"
         />

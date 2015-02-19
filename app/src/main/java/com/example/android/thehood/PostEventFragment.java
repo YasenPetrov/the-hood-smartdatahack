@@ -49,6 +49,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
     private EditText pickStartDateButton;
     private EditText pickEndDateButton;
     private GoogleMap mMap;
+    //variables for showing selected date and time nicely
     private static final SimpleDateFormat sdf_date = new SimpleDateFormat("dd/MM/yyyy");
     private static final SimpleDateFormat sdf_time = new SimpleDateFormat("HH:mm");
     // Variables to store the event details

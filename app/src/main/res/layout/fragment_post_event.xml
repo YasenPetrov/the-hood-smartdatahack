@@ -170,6 +170,7 @@
                 android:layout_weight="0.27"
                 android:scrollHorizontally="false"
                 android:imeOptions="actionDone"
+                android:maxLength="200"
                 android:height="100dp" />
 
         </LinearLayout>

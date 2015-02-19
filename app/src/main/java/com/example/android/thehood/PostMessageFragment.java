@@ -47,16 +47,12 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
 
     private static final String LOG_TAG = "PostFragment says: ";
 
+    private static Spinner days_spinner;
+    private static Spinner hours_spinner;
     private SupportMapFragment mapFragment;
-    private EditText pickStartTimeButton;
-    private EditText pickEndTimeButton;
-    private EditText pickStartDateButton;
-    private EditText pickEndDateButton;
     private GoogleMap mMap;
     // Variables to store the event details
     private LatLng eventLatLng;
-    private static Spinner days_spinner;
-    private static Spinner hours_spinner;
 
     public PostMessageFragment() {
     }
@@ -76,10 +72,6 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                 R.array.hours_array, android.R.layout.simple_spinner_item);
         hours_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hours_spinner.setAdapter(hours_adapter);
-        //
-        //TextView descriptionText = (TextView) rootView.findViewById(R.id.description_input_fieldMessage);
-        //descriptionText.setHorizontallyScrolling(false);
-        //descriptionText.setMaxLines(Integer.MAX_VALUE);
 
         return rootView;
     }
@@ -158,6 +150,8 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                 .getText().toString();
         String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_fieldMessage))
                 .getText().toString();
+
+        //gets the duration of a post from both spinners
         int duration = (Integer.parseInt(days_spinner.getSelectedItem().toString()))*24 +
                 Integer.parseInt(hours_spinner.getSelectedItem().toString());
         Log.v(LOG_TAG, String.valueOf(duration));
