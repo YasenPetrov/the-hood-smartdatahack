@@ -24,7 +24,7 @@ public class Utility {
         String unitType = prefs.getString(
                 context.getString(R.string.pref_units_key),
                 context.getString(R.string.pref_units_imperial));
-        if (unitType.equals(R.string.pref_units_imperial)) {
+        if (unitType.equals(context.getString(R.string.pref_units_imperial))) {
             return "mi";
         }
         return "km";

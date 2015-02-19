@@ -51,6 +51,7 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
     private static Spinner hours_spinner;
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
+    private TextView radiusUnitTextView;
     // Variables to store the event details
     private LatLng eventLatLng;
 
@@ -72,9 +73,8 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                 R.array.hours_array, android.R.layout.simple_spinner_item);
         hours_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hours_spinner.setAdapter(hours_adapter);
-        //TODO not correct needs to be fixed
-        //TextView distanceUnits = (TextView) rootView.findViewById(R.id.radius_units_textviewMessage);
-        //distanceUnits.setText(Utility.getPreferredDistanceUnits(getActivity()));
+        radiusUnitTextView = (TextView) rootView.findViewById(R.id.radius_units_textview);
+        setDistanceUnits();
         return rootView;
     }
 
@@ -209,6 +209,16 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
         }
         // TODO: Decide on a maximum radius and perform a validation on that
         return true;
+    }
+
+    @Override
+    public void onResume() {
+        setDistanceUnits();
+        super.onResume();
+    }
+
+    private void setDistanceUnits(){
+        radiusUnitTextView.setText(Utility.getPreferredDistanceUnits(getActivity()));
     }
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we

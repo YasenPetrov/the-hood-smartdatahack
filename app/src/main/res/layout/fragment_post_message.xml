@@ -118,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/radius_units_textviewMessage"
+            android:id="@+id/radius_units_textview"
             android:layout_weight="1" />
     </LinearLayout>
 

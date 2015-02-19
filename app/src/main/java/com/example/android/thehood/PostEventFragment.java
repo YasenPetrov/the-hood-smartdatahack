@@ -4,6 +4,7 @@ package com.example.android.thehood;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentManager;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -48,6 +49,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
     private EditText pickEndTimeButton;
     private EditText pickStartDateButton;
     private EditText pickEndDateButton;
+    private TextView radiusUnitTextView;
     private GoogleMap mMap;
     //variables for showing selected date and time nicely
     private static final SimpleDateFormat sdf_date = new SimpleDateFormat("dd/MM/yyyy");
@@ -65,6 +67,8 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_post_event, container, false);
         registerViews(rootView);
+        radiusUnitTextView = (TextView) rootView.findViewById(R.id.radius_units_textview);
+        setDistanceUnits();
         return rootView;
     }
 
@@ -338,11 +342,15 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         // TODO: Decide on a maximum radius and perform a validation on that
         return true;
     }
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
+
+    @Override
+    public void onResume() {
+        setDistanceUnits();
+        super.onResume();
+    }
+
+    private void setDistanceUnits(){
+        radiusUnitTextView.setText(Utility.getPreferredDistanceUnits(getActivity()));
+    }
 
 }
