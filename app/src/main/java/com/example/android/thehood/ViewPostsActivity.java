@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,15 +25,28 @@ import java.util.List;
 
 public class ViewPostsActivity extends FragmentActivity {
 
+    ViewPostsFragment mViewPostsFragment;
+
+    @Override
+    public void onBackPressed() {
+        Log.v("BASKFLds", " back pressed");
+        if (mViewPostsFragment.popWindow != null && mViewPostsFragment.popWindow.isShowing()) {
+            mViewPostsFragment.popWindow.dismiss();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.eactivity_vi);
+        mViewPostsFragment = new ViewPostsFragment();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ViewPostsFragment())
+                    .add(R.id.container, mViewPostsFragment)
                     .commit();
         }
     }

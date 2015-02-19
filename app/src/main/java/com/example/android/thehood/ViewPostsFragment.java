@@ -1,16 +1,28 @@
 package com.example.android.thehood;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ListFragment;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
+import android.view.Display;
+import android.view.DragEvent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -20,6 +32,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +51,11 @@ import java.util.List;
  * A placeholder fragment containing a simple view.
  */
 public class  ViewPostsFragment extends android.support.v4.app.Fragment {
-
+    public PopupWindow popWindow;
     private final String LOG_TAG = "ViewPostFragment says: ";
     // A temp variable for the visibility of posts, we should really get it from sharedPrefs
     private int max_post_dist = 1;
-    private ParseQueryAdapter<HoodPost> parseQueryAdapter;
+    private ParseQueryAdapter<HoodPost> postQueryAdapter;
     private ParseUser mCurrentUser = ParseUser.getCurrentUser();
 
     public ViewPostsFragment() {
@@ -51,6 +65,17 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_posts, container, false);
+        ListView commentsListView = (ListView) rootView.findViewById(R.id.posts_listview);
+        commentsListView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.v(LOG_TAG, "touch");
+                if (popWindow != null && popWindow.isShowing()) {
+                    popWindow.dismiss();
+                }
+                return true;
+            }
+        });
 
         // Make a custom query
         ParseQueryAdapter.QueryFactory<HoodPost> factory =
@@ -67,7 +92,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                     }
                 };
 
-        parseQueryAdapter = new ParseQueryAdapter<HoodPost>(getActivity(), HoodPost.class) {
+        postQueryAdapter = new ParseQueryAdapter<HoodPost>(getActivity(), HoodPost.class) {
             @Override
             public View getItemView(final HoodPost post, View view, ViewGroup parent) {
                 if (view == null) {
@@ -98,59 +123,162 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                 commentButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        HoodComment comment = new HoodComment();
-
-                        comment.setText(commentView.getText().toString());
-                        comment.setAuthor(currentUser);
-                        comment.setPost(post);
-                        post.addComment(comment);
-                        currentUser.add("comments", comment);
-                        ArrayList<ParseObject> objectsToSave = new ArrayList<ParseObject>();
-                        objectsToSave.add(post);
-                        objectsToSave.add(comment);
-                        objectsToSave.add(currentUser);
-                        try {
-                            ParseObject.saveAll(objectsToSave);
-
-                        } catch(ParseException e) {
-                            e.printStackTrace();
-                        }
-                        commentView.setText("");
+//                        HoodComment comment = new HoodComment();
+//
+//                        comment.setText(commentView.getText().toString());
+//                        comment.setAuthor(currentUser);
+//                        comment.setPost(post);
+//                        post.addComment(comment);
+//                        currentUser.add("comments", comment);
+//                        ArrayList<ParseObject> objectsToSave = new ArrayList<ParseObject>();
+//                        objectsToSave.add(post);
+//                        objectsToSave.add(comment);
+//                        objectsToSave.add(currentUser);
+//                        try {
+//                            ParseObject.saveAll(objectsToSave);
+//
+//                        } catch(ParseException e) {
+//                            e.printStackTrace();
+//                        }
+//                        commentView.setText("");
+//                        displayCommentDialog(post);
+                        showCommentsPopup(v, post);
 
                     }
                 });
                 return view;
             }
         };
-        parseQueryAdapter.setTextKey("title");
+        postQueryAdapter.setTextKey("title");
         ListView postsListView = (ListView) rootView.findViewById(R.id.posts_listview);
-        postsListView.setAdapter(parseQueryAdapter);
+        postsListView.setAdapter(postQueryAdapter);
         return rootView;
     }
 
 
-    private void doMapQuery() {
-        // 1
-        ParseGeoPoint myLoc = ParseUser.getCurrentUser().getParseGeoPoint("address");
-//        if (myLoc == null) {
-//            cleanUpMarkers(new HashSet<String>());
-//            return;
-//        }
-
-        ParseQuery<HoodPost> mapQuery = HoodPost.getQuery();
-        // 4
-        mapQuery.whereWithinKilometers("location", myLoc, max_post_dist);
-        // 5
-        mapQuery.include("author");
-        mapQuery.include("text");
-        mapQuery.orderByDescending("startTime");
-        mapQuery.setLimit(max_post_dist);
-        // 6
-        mapQuery.findInBackground(new FindCallback<HoodPost>() {
+//
+    private ParseQueryAdapter<HoodComment> makeCommentQueryAdapter(final HoodPost post) {
+        // Make query factory
+        ParseQueryAdapter.QueryFactory<HoodComment> factory =
+                new ParseQueryAdapter.QueryFactory<HoodComment>() {
+                    public ParseQuery<HoodComment> create() {
+                        ParseQuery<HoodComment> query = HoodComment.getQuery();
+                        query.whereEqualTo("post", post);
+                        return query;
+                    }
+                };
+        // Create adapter with our custom factory
+        ParseQueryAdapter<HoodComment> adapter = new ParseQueryAdapter<HoodComment>(getActivity(),
+                factory) {
             @Override
-            public void done(List<HoodPost> objects, ParseException e) {
-                // Handle the results
+            public View getItemView(final HoodComment comment, View view, ViewGroup parent) {
+                if (view == null) {
+                    view = View.inflate(getContext(), R.layout.hood_comment_item, null);
+                }
+                TextView commentTextView = (TextView) view.findViewById(R.id.comment_text_view);
+                commentTextView.setText(comment.getString("text"));
+                return view;
+            }
+        };
+        return adapter;
+    }
+
+    public void showCommentsPopup(View v, final HoodPost post){
+
+        LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        // inflate the custom popup layout
+        final View inflatedView = layoutInflater.inflate(R.layout.comments_popup_layout, null,false);
+//        inflatedView.setBackgroundColor(getResources().getColor(R.color.background_material_dark));
+
+        // find the ListView in the popup layout
+        final ListView listView = (ListView)inflatedView.findViewById(R.id.comments_listview);
+        // find the comment input box
+        final EditText inputCommentTextView = (EditText)inflatedView.findViewById(R.id.input_comment_text_view);
+        // find the "Comment" button
+        final Button commentButton = (Button) inflatedView.findViewById(R.id.comment_button);
+        // set button behaviour
+        commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String commentText = inputCommentTextView.getText().toString();
+                Log.v(LOG_TAG, commentText);
+                if(!commentText.isEmpty()) {
+                    // save the post
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    HoodComment comment = new HoodComment();
+                    comment.setAuthor(currentUser);
+                    comment.setPost(post);
+                    comment.setText(commentText);
+                    post.addComment(comment);
+                    currentUser.add("comments", comment);
+                    ArrayList<ParseObject> objectsToSave = new ArrayList<ParseObject>();
+                    objectsToSave.add(post);
+                    objectsToSave.add(comment);
+                    objectsToSave.add(currentUser);
+                    try {
+                        ParseObject.saveAll(objectsToSave);
+
+                    } catch(ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    // empty input EditText
+                    inputCommentTextView.setText("");
+                    // redisplay posts
+                    listView.setAdapter(makeCommentQueryAdapter(post));
+                }
             }
         });
+
+        // get device size
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        final Point size = new Point();
+        display.getSize(size);
+        int deviceHeight = size.y;
+
+
+        // fill the data to the list items
+        listView.setAdapter(makeCommentQueryAdapter(post));
+
+
+        // set height depends on the device size
+        popWindow = new PopupWindow(inflatedView, size.x - 50,size.y - 300, true);
+        // set a background drawable with rounders corners
+        popWindow.setBackgroundDrawable(getResources()
+                .getDrawable(R.drawable.abc_popup_background_mtrl_mult));
+        // make it focusable to show the keyboard to enter in `EditText`
+        popWindow.setFocusable(true);
+        // make it outside touchable to dismiss the popup window
+        popWindow.setOutsideTouchable(true);
+        // show the popup at bottom of the screen and set some margin at bottom ie,
+        popWindow.showAtLocation(v, Gravity.BOTTOM, 0,100);
     }
-}
+
+//    private void doMapQuery() {
+//        // 1
+//        ParseGeoPoint myLoc = ParseUser.getCurrentUser().getParseGeoPoint("address");
+////        if (myLoc == null) {
+////            cleanUpMarkers(new HashSet<String>());
+////            return;
+////        }
+//
+//        ParseQuery<HoodPost> mapQuery = HoodPost.getQuery();
+//        // 4
+//        mapQuery.whereWithinKilometers("location", myLoc, max_post_dist);
+//        // 5
+//        mapQuery.include("author");
+//        mapQuery.include("text");
+//        mapQuery.orderByDescending("startTime");
+//        mapQuery.setLimit(max_post_dist);
+//        // 6
+//        mapQuery.findInBackground(new FindCallback<HoodPost>() {
+//            @Override
+//            public void done(List<HoodPost> objects, ParseException e) {
+//                // Handle the results
+//            }
+//        });
+//    }
+
+
+    }
