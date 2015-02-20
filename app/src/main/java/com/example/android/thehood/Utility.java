@@ -18,6 +18,14 @@ public class Utility {
     private static final String KILOMETERS = "km";
     private static final double MILES_TO_KM = 1.609344;
 
+    public static double getPreferredRadius(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String userRadius = prefs.getString(
+                context.getString(R.string.pref_radius_key),
+                context.getString(R.string.pref_radius_value));
+        return (Double.parseDouble(userRadius));
+    }
+
     public ParseGeoPoint geoPointFromLatLng(LatLng latLng) {
         return new ParseGeoPoint(latLng.latitude, latLng.longitude);
     }
