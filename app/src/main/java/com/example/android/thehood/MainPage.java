@@ -8,9 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
-
-import com.parse.ParseQueryAdapter;
 
 
 public class MainPage extends ActionBarActivity {
@@ -18,16 +15,17 @@ public class MainPage extends ActionBarActivity {
 
     private Button mEventButton;
     private Button mPostButton;
+    private Button mViewPostsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         //Loads all posts
-        ParseQueryAdapter<HoodPost> adapter = new ParseQueryAdapter<HoodPost>(this, HoodPost.class);
-        adapter.setTextKey("title");
-        ListView postsListView = (ListView) this.findViewById(R.id.posts_listview);
-        postsListView.setAdapter(adapter);
+        //ParseQueryAdapter<HoodPost> adapter = new ParseQueryAdapter<HoodPost>(this, HoodPost.class);
+        //adapter.setTextKey("title");
+        //ListView postsListView = (ListView) this.findViewById(R.id.posts_listview);
+        //postsListView.setAdapter(adapter);
 
         mEventButton = (Button) findViewById(R.id.event_button);
         mEventButton.setOnClickListener(new View.OnClickListener() {
@@ -47,8 +45,8 @@ public class MainPage extends ActionBarActivity {
             }
         });
 
-        Button viewPostsButton = (Button) findViewById(R.id.view_posts_button);
-        viewPostsButton.setOnClickListener(new View.OnClickListener() {
+        mViewPostsButton = (Button) findViewById(R.id.view_posts_button);
+        mViewPostsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent viewPostsIntent = new Intent(v.getContext(), ViewPostsActivity.class);
@@ -60,10 +58,10 @@ public class MainPage extends ActionBarActivity {
 
     @Override
     protected void onResume() {
-        ParseQueryAdapter<HoodPost> adapter = new ParseQueryAdapter<HoodPost>(this, HoodPost.class);
-        adapter.setTextKey("title");
-        ListView postListView = (ListView) this.findViewById(R.id.posts_listview);
-        postListView.setAdapter(adapter);
+        //ParseQueryAdapter<HoodPost> adapter = new ParseQueryAdapter<HoodPost>(this, HoodPost.class);
+        //adapter.setTextKey("title");
+        //ListView postListView = (ListView) this.findViewById(R.id.posts_listview);
+        //postListView.setAdapter(adapter);
         Log.v(LOG_TAG, "Resumed");
         super.onResume();
     }
