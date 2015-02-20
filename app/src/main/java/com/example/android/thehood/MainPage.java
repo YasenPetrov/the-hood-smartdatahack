@@ -16,6 +16,7 @@ public class MainPage extends ActionBarActivity {
     private Button mEventButton;
     private Button mPostButton;
     private Button mViewPostsButton;
+    private Button mViewEventButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,16 @@ public class MainPage extends ActionBarActivity {
                 startActivity(viewPostsIntent);
             }
         });
+
+        mViewEventButton= (Button) findViewById(R.id.view_events_button);
+        mViewEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent viewEventIntent = new Intent(v.getContext(), ViewEventActivity.class);
+                startActivity(viewEventIntent);
+            }
+        });
+
 
     }
 
