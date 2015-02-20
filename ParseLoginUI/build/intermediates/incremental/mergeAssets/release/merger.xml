@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<merger version="3"><dataSet config="main"><source path="D:\coding\GitHub\the-hood-smartdatahack\ParseLoginUI\src\main\assets"/></dataSet><dataSet config="release"><source path="D:\coding\GitHub\the-hood-smartdatahack\ParseLoginUI\src\release\assets"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main"><source path="/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/src/main/assets"/></dataSet><dataSet config="release"><source path="/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/src/release/assets"/></dataSet></merger>
->>>>>>> 8401920a356742d762ddb2f13e3c948a668e9a03
+<merger version="3"><dataSet config="main"><source path="/home/stiliyan/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/src/main/assets"/></dataSet><dataSet config="release"><source path="/home/stiliyan/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/src/release/assets"/></dataSet></merger>
