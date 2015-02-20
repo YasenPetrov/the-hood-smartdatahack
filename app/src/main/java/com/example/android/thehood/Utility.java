@@ -34,7 +34,7 @@ public class Utility {
     }
 
     static String formatDate(Date date) {
-        return DateFormat.getDateInstance().format(date);
+        return DateFormat.getDateTimeInstance().format(date);
     }
 
     public static double formatDistance(Context context, String radiusString) {

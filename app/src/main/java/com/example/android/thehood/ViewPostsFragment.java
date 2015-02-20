@@ -68,16 +68,6 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_view_posts, container, false);
         ListView commentsListView = (ListView) rootView.findViewById(R.id.posts_listview);
-        commentsListView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.v(LOG_TAG, "touch");
-                if (popWindow != null && popWindow.isShowing()) {
-                    popWindow.dismiss();
-                }
-                return true;
-            }
-        });
 
         // Make a custom query
         ParseQueryAdapter.QueryFactory<HoodPost> factory =
@@ -193,8 +183,13 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                 }
                 try {
                     createdAt = comment.getCreatedAt();
-                } catch (android.net.ParseException e) {
+                } catch (NullPointerException e) {
                     e.printStackTrace();
+                    createdAt = Calendar.getInstance().getTime();
+                }
+                Log.v(LOG_TAG, createdAt.toString());
+                if(createdAt == null) {
+                    Log.v(LOG_TAG, createdAt.toString());
                     createdAt = Calendar.getInstance().getTime();
                 }
                 commentTextView.setText(comment.getString("text"));
