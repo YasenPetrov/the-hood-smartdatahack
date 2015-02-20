@@ -3,10 +3,13 @@ package com.example.android.thehood;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseGeoPoint;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -14,6 +17,7 @@ import java.util.Date;
  * Created by yasen on 18/02/15.
  */
 public class Utility {
+    private static final String LOG_TAG = "Utilty says: ";
     private static final String MILES = "mi";
     private static final String KILOMETERS = "km";
     private static final double MILES_TO_KM = 1.609344;
@@ -54,5 +58,15 @@ public class Utility {
         }
         //Kilometers
         return Double.parseDouble(radiusString);
+    }
+
+    public static String urlEncode(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        }
+        catch (UnsupportedEncodingException e) {
+            Log.wtf(LOG_TAG, "UTF-8 should always be supported", e);
+            throw new RuntimeException("URLEncoder.encode() failed for " + s);
+        }
     }
 }

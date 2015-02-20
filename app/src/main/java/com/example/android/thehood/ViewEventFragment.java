@@ -1,6 +1,8 @@
 package com.example.android.thehood;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -34,7 +36,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 
 
 /**
@@ -97,6 +99,7 @@ public class  ViewEventFragment extends android.support.v4.app.Fragment {
                 TextView createdAtView = (TextView) view.findViewById(R.id.created_at_viewEvent);
 
                 Button viewCommentsButton = (Button) view.findViewById(R.id.view_comments_buttonEvent);
+                Button tweetButton = (Button) view.findViewById(R.id.event_tweet_button);
 
                 ParseUser author = event.getAuthor();
 
@@ -117,6 +120,32 @@ public class  ViewEventFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void onClick(View v) {
                         showCommentsPopup(v, event);
+                    }
+                });
+
+                tweetButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.v(LOG_TAG, "tweet!");
+                        String locationUrl = String.format(
+                                "https://www.google.co.uk/maps/@%s,%s,20z?hl=en",
+                                event.getLocation().getLatitude(), event.getLocation()
+                                        .getLongitude());
+                        String tweetString = "#thehood\n" + event.getTitle() + " at ";
+                        String tweetUrl =
+                                String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+                                        Utility.urlEncode(tweetString), Utility.urlEncode(locationUrl));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl));
+
+                        // Narrow down to official Twitter app, if available:
+                        List<ResolveInfo> matches = getActivity().getPackageManager().queryIntentActivities(intent, 0);
+                        for (ResolveInfo info : matches) {
+                            if (info.activityInfo.packageName.toLowerCase().startsWith("com.twitter")) {
+                                intent.setPackage(info.activityInfo.packageName);
+                            }
+                        }
+
+                        startActivity(intent);
                     }
                 });
                 return view;

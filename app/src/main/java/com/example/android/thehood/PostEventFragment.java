@@ -306,7 +306,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
             ParseUser currentUser = ParseUser.getCurrentUser();
 
             // Make a new event, add it to the current user's posts_and_events
-            ParseObject event = new ParseObject("Event");
+            ParseObject event = new HoodEvent();
 
             event.put("location", new ParseGeoPoint(eventLatLng.latitude, eventLatLng.longitude));
             event.put("title", title);
