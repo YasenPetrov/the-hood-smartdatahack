@@ -31,12 +31,14 @@
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#ffeca23b"
             style="@style/ParseLoginUI.TextView" />
 
         <TextView
             android:id="@+id/profile_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#ffeca23b"
             style="@style/ParseLoginUI.TextView" />
 
         <Button
@@ -44,14 +46,19 @@
             android:layout_marginTop="@dimen/com_parse_ui_large_vertical_spacing"
             android:text="@string/launch_app_button_label"
             android:id="@+id/launch_app_button"
-            android:textColor="#ffeca23b" />
+            android:textColor="@android:color/white"
+            android:layout_height="@dimen/abc_action_bar_default_height_material"
+            android:background="#ffeca23b"
+            android:textSize="@dimen/abc_text_size_large_material" />
 
         <Button
             android:id="@+id/login_or_logout_button"
             style="@style/ParseLoginUI.Button"
             android:layout_marginTop="@dimen/com_parse_ui_large_vertical_spacing"
             android:text="@string/profile_logout_button_label"
-            android:textColor="#ffeca23b" />
+            android:textColor="@android:color/white"
+            android:layout_height="@dimen/abc_action_bar_default_height_material"
+            android:background="@android:color/holo_red_light" />
 
     </LinearLayout>
 </LinearLayout>

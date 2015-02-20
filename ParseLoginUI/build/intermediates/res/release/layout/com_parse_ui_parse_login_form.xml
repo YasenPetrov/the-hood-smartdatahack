@@ -51,4 +51,8 @@
         android:layout_marginBottom="@dimen/com_parse_ui_small_vertical_spacing"
         android:text="@string/com_parse_ui_forgot_password_button_label" />
 </LinearLayout>
+<<<<<<< HEAD
 <!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_login_form.xml -->
+=======
+<!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_login_form.xml -->
+>>>>>>> 1343ff88610e7747cb65512ce04ebd4fd6fb4c0d
