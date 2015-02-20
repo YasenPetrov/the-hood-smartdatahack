@@ -38,14 +38,6 @@ public class HoodComment extends ParseObject {
         put("text", text);
     }
 
-    public Date getCreatedAt() {
-        return getDate("createdAt");
-    }
-
-    public Date getUpdatedAt() {
-        return getDate("updatedAt");
-    }
-
     public static ParseQuery<HoodComment> getQuery() {
         return ParseQuery.getQuery(HoodComment.class);
     }
