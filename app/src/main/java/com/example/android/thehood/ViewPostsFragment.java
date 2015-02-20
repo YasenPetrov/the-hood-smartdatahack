@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -264,9 +265,12 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
         popWindow.setBackgroundDrawable(getResources()
                 .getDrawable(R.drawable.abc_popup_background_mtrl_mult));
         // make it focusable to show the keyboard to enter in `EditText`
-        popWindow.setFocusable(true);
+//        popWindow.setFocusable(true);
         // make it outside touchable to dismiss the popup window
         popWindow.setOutsideTouchable(true);
+
+        popWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        popWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
         // show the popup at bottom of the screen and set some margin at bottom ie,
         popWindow.showAtLocation(v, Gravity.BOTTOM, 0,100);
     }
