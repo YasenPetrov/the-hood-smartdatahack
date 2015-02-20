@@ -55,7 +55,8 @@
         android:id="@+id/create_account"
         style="@style/ParseLoginUI.Button"
         android:layout_marginTop="@dimen/com_parse_ui_small_vertical_spacing"
-        android:text="@string/com_parse_ui_create_account_button_label" />
+        android:text="@string/com_parse_ui_create_account_button_label"
+        android:textColor="#eca23b" />
 
 </LinearLayout>
-<!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_signup_form.xml --><!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_signup_form.xml -->
+<!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_signup_form.xml --><!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_signup_form.xml -->
