@@ -47,6 +47,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
     private ParseUser mCurrentUser = ParseUser.getCurrentUser();
     private ParseGeoPoint mCurrentUserLocation = mCurrentUser.getParseGeoPoint("Address");
     private static double userRadius;
+    private Calendar currentDate;
 
     public ViewPostsFragment() {
     }
@@ -54,6 +55,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        currentDate = Calendar.getInstance();
         userRadius = Utility.getPreferredRadius(getActivity());
         View rootView = inflater.inflate(R.layout.fragment_view_posts, container, false);
         ListView commentsListView = (ListView) rootView.findViewById(R.id.posts_listview);
@@ -64,8 +66,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                     public ParseQuery<HoodPost> create() {
                         ParseQuery<HoodPost> query = HoodPost.getQuery();
                         query.whereWithinKilometers("location", mCurrentUserLocation, userRadius);
-                        query.include("author");
-                        query.include("text");
+                        query.whereGreaterThan("ends_at", currentDate.getTime());
                         query.orderByDescending("createdAt");
 //                        mapQuery.setLimit(max_post_dist);
 
@@ -74,6 +75,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                 };
 
         postQueryAdapter = new ParseQueryAdapter<HoodPost>(getActivity(), postFactory) {
+
             @Override
             public View getItemView(final HoodPost post, View view, ViewGroup parent) {
 
@@ -98,7 +100,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                     e.printStackTrace();
                 }
 
-                postTextView.setText(post.getDescription());
+                postTextView.setText(post.getTitle());
                 authorView.setText(name);
                 createdAtView.setText(Utility.formatDate(post.getCreatedAt()));
 
@@ -129,18 +131,15 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
 
                     }
                 });
-                double post_user_distance = mCurrentUserLocation
-                        .distanceInKilometersTo(post.getLocation());
-                if (post.getRadius() < post_user_distance){ //if post does not want to be seen;
-                    //view.setVisibility(View.GONE);
-                    //TODO
-                }
                 return view;
             }
         };
+
         postQueryAdapter.setTextKey("title");
+        ParseQueryAdapter<HoodPost> filteredPosts = new ParseQueryAdapter<HoodPost>();
         ListView postsListView = (ListView) rootView.findViewById(R.id.posts_listview);
         postsListView.setAdapter(postQueryAdapter);
+
         return rootView;
     }
 
