@@ -9,36 +9,53 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:gravity="center_vertical">
 
     <Button
         android:id="@+id/post_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
         android:layout_marginBottom="5dp"
         android:background="#eca23b"
         android:text="@string/create_post"
         android:textAppearance="?android:attr/textAppearanceSmallInverse"
-        android:textSize="@dimen/abc_text_size_large_material" />
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textStyle="bold"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/event_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
         android:layout_marginBottom="5dp"
         android:background="#eca23b"
         android:text="@string/create_event"
         android:textAppearance="?android:attr/textAppearanceSmallInverse"
-        android:textSize="@dimen/abc_text_size_large_material" />
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"/>
 
     <Button
         android:id="@+id/view_posts_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
         android:layout_marginBottom="5dp"
         android:background="#ffec6200"
-        android:text="View Posts"
+        android:text="@string/view_posts"
+        android:textColor="@android:color/white"
         android:textAppearance="?android:attr/textAppearanceSmallInverse"
-        android:textSize="@dimen/abc_text_size_large_material" />
+        android:textSize="@dimen/abc_text_size_headline_material" />
+
+    <Button
+        android:id="@+id/view_events_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:layout_marginBottom="5dp"
+        android:background="#ffec6200"
+        android:text="@string/view_events"
+        android:textAppearance="?android:attr/textAppearanceSmallInverse"
+        android:textSize="@dimen/abc_text_size_headline_material"
+        android:textColor="@android:color/white"/>
 
 </LinearLayout>
