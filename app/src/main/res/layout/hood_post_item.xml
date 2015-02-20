@@ -11,7 +11,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#ffffbb14"
+        android:background="#ffec6200"
         android:padding="5dp">
 
         <TextView
@@ -60,15 +60,17 @@
                 android:text="Comment"
                 android:id="@+id/view_comments_button"
                 android:layout_weight="1"
-                android:background="@drawable/com_facebook_button_grey_normal" />
+                android:background="@drawable/com_facebook_button_grey_normal"
+                android:textColor="#ffec6200" />
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Show on map"
+                android:text="SHOW ON MAP"
                 android:id="@+id/button"
                 android:layout_weight="1"
-                android:background="@drawable/com_facebook_button_grey_normal" />
+                android:background="@drawable/com_facebook_button_grey_normal"
+                android:textColor="#ffec6200" />
         </LinearLayout>
 
     </LinearLayout>

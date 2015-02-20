@@ -30,4 +30,4 @@
         android:text="@string/com_parse_ui_login_help_submit_button_label"
         android:textColor="#eca23b" />
 </LinearLayout>
-<!-- From: file:/home/stiliyan/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_login_help_form.xml -->
+<!-- From: file:/D:/coding/GitHub/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_login_help_form.xml -->
