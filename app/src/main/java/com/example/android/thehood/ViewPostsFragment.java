@@ -136,7 +136,6 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
         };
 
         postQueryAdapter.setTextKey("title");
-        ParseQueryAdapter<HoodPost> filteredPosts = new ParseQueryAdapter<HoodPost>();
         ListView postsListView = (ListView) rootView.findViewById(R.id.posts_listview);
         postsListView.setAdapter(postQueryAdapter);
 
