@@ -1,31 +1,20 @@
 package com.example.android.thehood;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ListFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.Display;
-import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -33,12 +22,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+
 
 
 /**
@@ -56,9 +43,10 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
     public PopupWindow popWindow;
     private final String LOG_TAG = "ViewPostFragment says: ";
     // A temp variable for the visibility of posts, we should really get it from sharedPrefs
-    private int max_post_dist = 1;
     private ParseQueryAdapter<HoodPost> postQueryAdapter;
     private ParseUser mCurrentUser = ParseUser.getCurrentUser();
+    private ParseGeoPoint mCurrentUserLocation = mCurrentUser.getParseGeoPoint("Address");
+    private static double userRadius;
 
     public ViewPostsFragment() {
     }
@@ -66,37 +54,40 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        userRadius = Utility.getPreferredRadius(getActivity());
         View rootView = inflater.inflate(R.layout.fragment_view_posts, container, false);
         ListView commentsListView = (ListView) rootView.findViewById(R.id.posts_listview);
 
         // Make a custom query
-        ParseQueryAdapter.QueryFactory<HoodPost> factory =
+        ParseQueryAdapter.QueryFactory<HoodPost> postFactory =
                 new ParseQueryAdapter.QueryFactory<HoodPost>() {
                     public ParseQuery<HoodPost> create() {
-                        ParseGeoPoint myLoc = ParseUser.getCurrentUser().getParseGeoPoint("address");
                         ParseQuery<HoodPost> query = HoodPost.getQuery();
-                        query.whereWithinKilometers("location", myLoc, max_post_dist);
+                        query.whereWithinKilometers("location", mCurrentUserLocation, userRadius);
                         query.include("author");
                         query.include("text");
-                        query.orderByDescending("startTime");
+                        query.orderByDescending("createdAt");
 //                        mapQuery.setLimit(max_post_dist);
+
                         return query;
                     }
                 };
 
-        postQueryAdapter = new ParseQueryAdapter<HoodPost>(getActivity(), HoodPost.class) {
+        postQueryAdapter = new ParseQueryAdapter<HoodPost>(getActivity(), postFactory) {
             @Override
             public View getItemView(final HoodPost post, View view, ViewGroup parent) {
+
                 if (view == null) {
                     view = View.inflate(getContext(), R.layout.hood_post_item, null);
                 }
+
                 TextView postTextView = (TextView) view.findViewById(R.id.text_view);
                 TextView authorView = (TextView) view.findViewById(R.id.author_view);
                 TextView createdAtView = (TextView) view.findViewById(R.id.created_at_view);
+
                 Button viewCommentsButton = (Button) view.findViewById(R.id.view_comments_button);
 
                 ParseUser author = post.getAuthor();
-                final ParseUser currentUser = ParseUser.getCurrentUser();
 
                 String name = "";
                 try {
@@ -135,8 +126,15 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
 //                        displayCommentDialog(post);
                         showCommentsPopup(v, post);
 
+
                     }
                 });
+                double post_user_distance = mCurrentUserLocation
+                        .distanceInKilometersTo(post.getLocation());
+                if (post.getRadius() < post_user_distance){ //if post does not want to be seen;
+                    //view.setVisibility(View.GONE);
+                    //TODO
+                }
                 return view;
             }
         };
@@ -299,4 +297,9 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
 //    }
 
 
+    @Override
+    public void onResume() {
+        userRadius = Utility.getPreferredRadius(getActivity());
+        super.onResume();
     }
+}

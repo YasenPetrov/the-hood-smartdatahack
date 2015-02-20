@@ -23,8 +23,4 @@
     android:focusable="false"
     android:clickable="false"
     android:button="@drawable/com_facebook_button_check" />
-<<<<<<< HEAD
-<!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/layout/com_facebook_picker_checkbox.xml --><!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/layout/com_facebook_picker_checkbox.xml -->
-=======
 <!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/layout/com_facebook_picker_checkbox.xml --><!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/layout/com_facebook_picker_checkbox.xml -->
->>>>>>> 1343ff88610e7747cb65512ce04ebd4fd6fb4c0d

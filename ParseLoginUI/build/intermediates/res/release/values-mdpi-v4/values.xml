@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
-    <!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/values-mdpi-v4/values.xml -->
-=======
     <!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/values-mdpi-v4/values.xml -->
->>>>>>> 1343ff88610e7747cb65512ce04ebd4fd6fb4c0d
     <eat-comment/>
     <dimen name="com_facebook_picker_divider_width">1px</dimen>
 </resources>
