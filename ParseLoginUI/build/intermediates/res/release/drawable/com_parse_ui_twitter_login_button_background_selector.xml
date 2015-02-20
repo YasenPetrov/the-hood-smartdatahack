@@ -5,8 +5,4 @@
     <item android:drawable="@color/com_parse_ui_twitter_login_button"/>
 
 </selector>
-<<<<<<< HEAD
-<!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/res/drawable/com_parse_ui_twitter_login_button_background_selector.xml -->
-=======
 <!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/res/drawable/com_parse_ui_twitter_login_button_background_selector.xml -->
->>>>>>> dev

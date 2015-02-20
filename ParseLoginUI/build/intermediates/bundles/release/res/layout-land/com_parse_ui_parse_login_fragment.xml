@@ -25,8 +25,4 @@
         <include layout="@layout/com_parse_ui_parse_login_third_party_section" />
     </LinearLayout>
 </LinearLayout>
-<<<<<<< HEAD
-<!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/res/layout-land/com_parse_ui_parse_login_fragment.xml -->
-=======
 <!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/res/layout-land/com_parse_ui_parse_login_fragment.xml -->
->>>>>>> dev
