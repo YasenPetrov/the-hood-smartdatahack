@@ -21,4 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.5" />
 </LinearLayout>
+<<<<<<< HEAD
+<!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_login_help_fragment.xml -->
+=======
 <!-- From: file:/home/stiliyan/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_login_help_fragment.xml -->
+>>>>>>> 508c11b7834df55ad254aa6436208e9e956d43dc

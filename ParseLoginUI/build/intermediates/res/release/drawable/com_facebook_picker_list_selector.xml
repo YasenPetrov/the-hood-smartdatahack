@@ -25,4 +25,8 @@
     <item android:state_focused="true"                                                             android:drawable="@drawable/com_facebook_picker_list_focused" />
 
 </selector>
+<<<<<<< HEAD
 <!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/drawable/com_facebook_picker_list_selector.xml --><!-- From: file:/D:/coding/GitHub/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/drawable/com_facebook_picker_list_selector.xml -->
+=======
+<!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/drawable/com_facebook_picker_list_selector.xml --><!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/drawable/com_facebook_picker_list_selector.xml -->
+>>>>>>> 8401920a356742d762ddb2f13e3c948a668e9a03

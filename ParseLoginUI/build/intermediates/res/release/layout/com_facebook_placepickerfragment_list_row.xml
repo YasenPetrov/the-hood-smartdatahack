@@ -88,4 +88,8 @@
             android:background="@drawable/com_facebook_picker_default_separator_color"
             />
 </RelativeLayout>
+<<<<<<< HEAD
 <!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/layout/com_facebook_placepickerfragment_list_row.xml --><!-- From: file:/D:/coding/GitHub/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/layout/com_facebook_placepickerfragment_list_row.xml -->
+=======
+<!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/layout/com_facebook_placepickerfragment_list_row.xml --><!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/layout/com_facebook_placepickerfragment_list_row.xml -->
+>>>>>>> 8401920a356742d762ddb2f13e3c948a668e9a03

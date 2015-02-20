@@ -26,4 +26,8 @@
         <include layout="@layout/com_parse_ui_parse_login_third_party_section" />
     </LinearLayout>
 </LinearLayout>
+<<<<<<< HEAD
+<!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_login_fragment.xml --><!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_fragment.xml -->
+=======
 <!-- From: file:/home/stiliyan/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/res/layout/com_parse_ui_parse_login_fragment.xml --><!-- From: file:/home/stiliyan/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/build/intermediates/bundles/debug/res/layout/com_parse_ui_parse_login_fragment.xml -->
+>>>>>>> 508c11b7834df55ad254aa6436208e9e956d43dc

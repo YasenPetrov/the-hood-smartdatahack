@@ -64,6 +64,13 @@
                 android:textColor="#ffec6200" />
 
             <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tweet"
+                android:id="@+id/post_tweet_button"
+                android:background="@drawable/com_facebook_button_grey_normal" />
+
+            <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="SHOW ON MAP"

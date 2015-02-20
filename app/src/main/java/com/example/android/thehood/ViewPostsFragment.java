@@ -1,7 +1,10 @@
 package com.example.android.thehood;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -26,7 +29,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.util.List;
 
 
 /**
@@ -89,6 +92,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                 TextView createdAtView = (TextView) view.findViewById(R.id.created_at_view);
 
                 Button viewCommentsButton = (Button) view.findViewById(R.id.view_comments_button);
+                Button tweetButton = (Button) view.findViewById(R.id.post_tweet_button);
 
                 ParseUser author = post.getAuthor();
 
@@ -108,28 +112,34 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                 viewCommentsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        HoodComment comment = new HoodComment();
-//
-//                        comment.setText(commentView.getText().toString());
-//                        comment.setAuthor(currentUser);
-//                        comment.setPost(post);
-//                        post.addComment(comment);
-//                        currentUser.add("comments", comment);
-//                        ArrayList<ParseObject> objectsToSave = new ArrayList<ParseObject>();
-//                        objectsToSave.add(post);
-//                        objectsToSave.add(comment);
-//                        objectsToSave.add(currentUser);
-//                        try {
-//                            ParseObject.saveAll(objectsToSave);
-//
-//                        } catch(ParseException e) {
-//                            e.printStackTrace();
-//                        }
-//                        commentView.setText("");
-//                        displayCommentDialog(post);
                         showCommentsPopup(v, post);
+                    }
+                });
 
+                tweetButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.v(LOG_TAG, "tweet!");
+                        Log.v(LOG_TAG, "tweet!");
+                        String locationUrl = String.format(
+                                "https://www.google.co.uk/maps/@%s,%s,20z?hl=en",
+                                post.getLocation().getLatitude(), post.getLocation()
+                                        .getLongitude());
+                        String tweetString = "#thehood\n" + post.getTitle() + " at ";
+                        String tweetUrl =
+                                String.format("https://twitter.com/intent/tweet?text=%s&url=%s",
+                                        Utility.urlEncode(tweetString), Utility.urlEncode(locationUrl));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweetUrl));
 
+                        // Narrow down to official Twitter app, if available:
+                        List<ResolveInfo> matches = getActivity().getPackageManager().queryIntentActivities(intent, 0);
+                        for (ResolveInfo info : matches) {
+                            if (info.activityInfo.packageName.toLowerCase().startsWith("com.twitter")) {
+                                intent.setPackage(info.activityInfo.packageName);
+                            }
+                        }
+
+                        startActivity(intent);
                     }
                 });
                 return view;
