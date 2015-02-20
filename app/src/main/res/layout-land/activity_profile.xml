@@ -6,7 +6,8 @@
     android:paddingRight="@dimen/com_parse_ui_horizontal_margin"
     android:paddingBottom="@dimen/com_parse_ui_vertical_margin"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ParseLoginUI.TextView"
-            android:text="@string/profile_title_logged_in" />
+            android:text="@string/profile_title_logged_in"
+            android:textColor="#eca23b" />
 
         <TextView
             android:id="@+id/profile_name"
@@ -34,9 +36,17 @@
             style="@style/ParseLoginUI.TextView" />
 
         <Button
+            style="@style/ParseLoginUI.Button"
+            android:layout_marginTop="@dimen/com_parse_ui_large_vertical_spacing"
+            android:text="@string/launch_app_button_label"
+            android:id="@+id/launch_app_button"
+            android:textColor="#eca23b" />
+
+        <Button
             android:id="@+id/login_or_logout_button"
             style="@style/ParseLoginUI.Button"
             android:layout_marginTop="@dimen/com_parse_ui_large_vertical_spacing"
-            android:text="@string/profile_logout_button_label"/>
+            android:text="@string/profile_logout_button_label"
+            android:textColor="#eca23b" />
     </LinearLayout>
 </LinearLayout>

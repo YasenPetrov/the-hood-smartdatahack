@@ -1,7 +1,9 @@
 package com.example.android.thehood;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,10 +19,14 @@ import com.parse.ui.ParseLoginBuilder;
 public class ProfileActivity extends Activity {
     private static final int LOGIN_REQUEST = 0;
 
+    // Log tag(for debugging purposes only) :
+    private final String LOG_TAG = "ProfileActivity says: ";
+
     private TextView titleTextView;
     private TextView emailTextView;
     private TextView nameTextView;
     private Button loginOrLogoutButton;
+    private Button launchAppButton;
 
     private ParseUser currentUser;
 
@@ -33,6 +39,7 @@ public class ProfileActivity extends Activity {
         emailTextView = (TextView) findViewById(R.id.profile_email);
         nameTextView = (TextView) findViewById(R.id.profile_name);
         loginOrLogoutButton = (Button) findViewById(R.id.login_or_logout_button);
+        launchAppButton = (Button) findViewById(R.id.launch_app_button);
         titleTextView.setText(R.string.profile_title_logged_in);
 
         loginOrLogoutButton.setOnClickListener(new OnClickListener() {
@@ -48,6 +55,28 @@ public class ProfileActivity extends Activity {
                     ParseLoginBuilder loginBuilder = new ParseLoginBuilder(
                             ProfileActivity.this);
                     startActivityForResult(loginBuilder.build(), LOGIN_REQUEST);
+                }
+            }
+        });
+
+        launchAppButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.v(LOG_TAG, "launch app clicked!");
+
+                if(currentUser.getParseGeoPoint("Address") == null) {
+                    Log.v(LOG_TAG, "No address");
+
+                    Intent addressInputIntent = new Intent(v.getContext(), UserAddressInput.class);
+                    startActivity(addressInputIntent);
+                }
+                else
+                {
+                    String pgp = currentUser.getParseGeoPoint("Address").toString();
+                    Log.v(LOG_TAG, "GeoPoint: " + pgp);
+                    //Launches the main page if we already have an address
+                    Intent mainPageIntent = new Intent(v.getContext(),MainPage.class);
+                    startActivity(mainPageIntent);
                 }
             }
         });
@@ -76,6 +105,7 @@ public class ProfileActivity extends Activity {
             nameTextView.setText(fullName);
         }
         loginOrLogoutButton.setText(R.string.profile_logout_button_label);
+        launchAppButton.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -86,5 +116,6 @@ public class ProfileActivity extends Activity {
         emailTextView.setText("");
         nameTextView.setText("");
         loginOrLogoutButton.setText(R.string.profile_login_button_label);
+        launchAppButton.setVisibility(View.INVISIBLE);
     }
 }

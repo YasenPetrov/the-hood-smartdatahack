@@ -6,12 +6,17 @@ package com.example.android.thehood;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseObject;
 import com.parse.ParseTwitterUtils;
 
 public class TheHood extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ParseObject.registerSubclass(HoodPost.class);
+        ParseObject.registerSubclass(HoodEvent.class);
+        ParseObject.registerSubclass(HoodComment.class);
         // Required - Initialize the Parse SDK
         Parse.initialize(this, getString(R.string.parse_app_id),
                 getString(R.string.parse_client_key));

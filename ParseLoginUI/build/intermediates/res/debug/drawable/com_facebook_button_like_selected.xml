@@ -24,4 +24,8 @@
 
 
 </selector>
-<!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/drawable/com_facebook_button_like_selected.xml --><!-- From: file:/home/yasen/workspace/android/TheHood/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/drawable/com_facebook_button_like_selected.xml -->
+<<<<<<< HEAD
+<!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/drawable/com_facebook_button_like_selected.xml --><!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/drawable/com_facebook_button_like_selected.xml -->
+=======
+<!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/drawable/com_facebook_button_like_selected.xml --><!-- From: file:/home/stiliyan/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/drawable/com_facebook_button_like_selected.xml -->
+>>>>>>> 508c11b7834df55ad254aa6436208e9e956d43dc

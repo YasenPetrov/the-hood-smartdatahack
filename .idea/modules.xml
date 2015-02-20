@@ -3,9 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ParseLoginUI/ParseLoginUI.iml" filepath="$PROJECT_DIR$/ParseLoginUI/ParseLoginUI.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TheHood.iml" filepath="$PROJECT_DIR$/TheHood.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TheHood2.iml" filepath="$PROJECT_DIR$/TheHood2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/the-hood-smartdatahack.iml" filepath="$PROJECT_DIR$/the-hood-smartdatahack.iml" />
     </modules>
   </component>
 </project>

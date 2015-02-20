@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">The hood</string>
+    <string name="profile_logo_content_description">Logo</string>
+    <string name="profile_title_logged_in">You are logged in as</string>
+    <string name="profile_logout_button_label">Log out</string>
+    <string name="profile_title_logged_out">You must be logged in to view your profile</string>
+    <string name="get_location_from_gps_label">Get my location from GPS</string>
+    <string name="profile_login_button_label">Log in</string>
+    <string name="launch_app_button_label">Launch</string>
+    <string name="title_activity_user_address_input">Map</string>
+    <string name="title_activity_main_page">MainPage</string>
+    <string name="action_settings">Settings</string>
+    <string name="write_post">Write your post here</string>
+    <string name="send_post">Post</string>
+    <string name="post">Post</string>
+    <string name="select_location_label">Select your location</string>
+    <string name="submit_location_button_label">This is my location</string>
+    <string name="title_activity_post">PostActivity</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pick_start_time">Start time</string>
+    <string name="pick_end_time">End time</string>
+    <string name="pick_start_date">Start date</string>
+    <string name="pick_end_date">End date</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="set_radius">Visible in a radius of</string>
+    <string name="radius_units">m</string>
+    <string name="description">Description</string>
+    <string name="title">Title</string>
+    <string name="create_event">Create Event</string>
+    <string name="event">Event</string>
+    <string name="title_activity_post_message">PostMessageActivity</string>
+    <string name="title_activity_view_posts">ViewPostsActivity</string>
+    <string name="duration">Duration</string>
+    <string name="days">days</string>
+    <string name="create_post">Create Post</string>
+    <string name="pref_units_key">units</string>
+    <string name="pref_units_label">Distance Units</string>
+    <string name="pref_units_label_metric">Metric</string>
+    <string name="pref_units_label_imperial">Imperial</string>
+    <string name="pref_units_metric">metric</string>
+    <string name="pref_units_imperial">imperial</string>
+    <string name="pref_radius_key">radius</string>
+    <string name="pref_radius_label">Post Radius</string>
+    <string name="pref_radius_value">100</string>
+    <string name="view_events">View Events</string>
+    <string name="view_posts">View Posts</string>
+    <string name="title_activity_view_event">ViewEventActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+
+</resources>
+
