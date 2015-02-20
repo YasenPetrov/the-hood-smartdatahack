@@ -47,6 +47,9 @@
     <string name="pref_radius_value">100</string>
     <string name="view_events">View Events</string>
     <string name="view_posts">View Posts</string>
+    <string name="title_activity_view_event">ViewEventActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>
 
