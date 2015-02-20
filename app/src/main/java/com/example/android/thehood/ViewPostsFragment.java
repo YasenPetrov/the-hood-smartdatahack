@@ -36,6 +36,8 @@ import com.parse.ParseUser;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -101,8 +103,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                 TextView postTextView = (TextView) view.findViewById(R.id.text_view);
                 TextView authorView = (TextView) view.findViewById(R.id.author_view);
                 TextView createdAtView = (TextView) view.findViewById(R.id.created_at_view);
-                final TextView commentView = (TextView) view.findViewById(R.id.comment_view);
-                Button commentButton = (Button) view.findViewById(R.id.comment_button);
+                Button viewCommentsButton = (Button) view.findViewById(R.id.view_comments_button);
 
                 ParseUser author = post.getAuthor();
                 final ParseUser currentUser = ParseUser.getCurrentUser();
@@ -120,7 +121,7 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                 authorView.setText(name);
                 createdAtView.setText(Utility.formatDate(post.getCreatedAt()));
 
-                commentButton.setOnClickListener(new View.OnClickListener() {
+                viewCommentsButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 //                        HoodComment comment = new HoodComment();
@@ -176,7 +177,29 @@ public class  ViewPostsFragment extends android.support.v4.app.Fragment {
                     view = View.inflate(getContext(), R.layout.hood_comment_item, null);
                 }
                 TextView commentTextView = (TextView) view.findViewById(R.id.comment_text_view);
+                TextView authorTextView = (TextView) view.findViewById(
+                        R.id.comment_author_textview);
+                TextView datePublishedTextView = (TextView) view.findViewById(
+                        R.id.comment_date_textview);
+
+                Date createdAt;
+                String authorName = "";
+                try {
+                    authorName = comment.getAuthor().fetchIfNeeded().getString("name");
+
+                } catch (ParseException e) {
+                    Log.v(LOG_TAG, e.toString());
+                    e.printStackTrace();
+                }
+                try {
+                    createdAt = comment.getCreatedAt();
+                } catch (android.net.ParseException e) {
+                    e.printStackTrace();
+                    createdAt = Calendar.getInstance().getTime();
+                }
                 commentTextView.setText(comment.getString("text"));
+                authorTextView.setText(authorName);
+                datePublishedTextView.setText(Utility.formatDate(createdAt));
                 return view;
             }
         };

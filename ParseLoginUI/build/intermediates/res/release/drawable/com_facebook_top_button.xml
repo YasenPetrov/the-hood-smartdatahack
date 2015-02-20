@@ -25,8 +25,4 @@
     <item
             android:drawable="@drawable/com_facebook_top_background" />
 </selector>
-<<<<<<< HEAD
 <!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/drawable/com_facebook_top_button.xml --><!-- From: file:/home/yasen/workspace/smartdatahack/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/drawable/com_facebook_top_button.xml -->
-=======
-<!-- From: file:/Users/gokhanc/src/sdkrm/out/android-sdk/facebook/res/drawable/com_facebook_top_button.xml --><!-- From: file:/home/justas/AndroidStudioProjects/the-hood-smartdatahack/ParseLoginUI/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/3.21.1/res/drawable/com_facebook_top_button.xml -->
->>>>>>> dev
