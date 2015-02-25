@@ -11,7 +11,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/comment_author_textview"
-        android:textColor="@android:color/black"
+        android:textColor="#ffeca23b"
         android:textStyle="bold" />
 
     <TextView

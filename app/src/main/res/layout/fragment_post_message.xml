@@ -42,7 +42,8 @@
                 android:inputType="text"
                 android:imeOptions="actionDone"
                 android:maxLength="50"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="#ffeca23b" />
         </LinearLayout>
 
     </LinearLayout>
@@ -50,7 +51,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="45dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -112,7 +113,8 @@
             android:maxLength="3"
             android:id="@+id/radius_input_fieldMessage"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="#ffeca23b" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -139,13 +141,14 @@
         android:maxLength="200"
         android:layout_weight="0.27"
         android:imeOptions="actionDone"
-        />
+        android:textColor="#ffeca23b" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/create_post"
-        android:id="@+id/create_event_buttonMessage" />
+        android:id="@+id/create_event_buttonMessage"
+        android:background="#ffeca23b" />
 
 
 </LinearLayout>
