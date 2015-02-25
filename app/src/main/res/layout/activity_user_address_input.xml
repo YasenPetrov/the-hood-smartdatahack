@@ -35,7 +35,8 @@
             android:text="@string/submit_location_button_label"
             android:id="@+id/submit_location_button"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffeca23b" />
 
         <Button
             android:layout_width="wrap_content"
@@ -43,7 +44,8 @@
             android:text="@string/get_location_from_gps_label"
             android:id="@+id/gps_location_button"
             android:layout_marginBottom="30dp"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:textColor="#ffeca23b" />
     </LinearLayout>
 
 </RelativeLayout>
