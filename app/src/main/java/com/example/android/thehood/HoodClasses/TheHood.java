@@ -1,12 +1,12 @@
-package com.example.android.thehood;
+package com.example.android.thehood.HoodClasses;
 
 /**
  * Created by yasen on 16/02/15.
  */
 import android.app.Application;
 
+import com.example.android.thehood.R;
 import com.parse.Parse;
-import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 import com.parse.ParseTwitterUtils;
 

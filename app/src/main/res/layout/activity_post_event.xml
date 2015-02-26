@@ -4,6 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Base.Theme.AppCompat"
-    tools:context="com.example.android.thehood.PostEventActivity"
+    tools:context="com.example.android.thehood.PostViews.PostEventActivity"
     tools:ignore="MergeRootFrame"
     android:background="#ffffffff" />

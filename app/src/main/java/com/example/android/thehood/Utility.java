@@ -45,7 +45,7 @@ public class Utility {
         return KILOMETERS;
     }
 
-    static String formatDate(Date date) {
+    public static String formatDate(Date date) {
         return DateFormat.getDateTimeInstance().format(date);
     }
 

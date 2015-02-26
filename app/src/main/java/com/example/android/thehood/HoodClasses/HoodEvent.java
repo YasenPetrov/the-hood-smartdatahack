@@ -1,4 +1,4 @@
-package com.example.android.thehood;
+package com.example.android.thehood.HoodClasses;
 
 import com.parse.ParseClassName;
 import com.parse.ParseGeoPoint;

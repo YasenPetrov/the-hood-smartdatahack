@@ -1,4 +1,4 @@
-package com.example.android.thehood;
+package com.example.android.thehood.HoodClasses;
 
 /**
  * Created by stiliyan on 15-2-17.

@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".TheHood"
+        android:name=".HoodClasses.TheHood"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -75,13 +75,13 @@
                 android:value="com.example.android.thehood.ProfileActivity" />
         </activity>
         <activity
-            android:name=".PostEventActivity"
+            android:name=".PostViews.PostEventActivity"
             android:label="@string/title_activity_post" />
         <activity
-            android:name=".PostMessageActivity"
+            android:name=".PostViews.PostMessageActivity"
             android:label="@string/title_activity_post_message" />
         <activity
-            android:name=".ViewPostsActivity"
+            android:name=".ListViews.ViewPostsActivity"
             android:label="@string/title_activity_view_posts" />
         <activity
             android:name=".SettingsActivity"
@@ -92,7 +92,7 @@
                 android:value="com.example.android.thehood.MainPage" />
         </activity>
         <activity
-            android:name=".ViewEventActivity"
+            android:name=".ListViews.ViewEventActivity"
             android:label="@string/title_activity_view_event" >
         </activity>
     </application>

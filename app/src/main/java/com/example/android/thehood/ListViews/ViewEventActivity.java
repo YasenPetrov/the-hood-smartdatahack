@@ -1,37 +1,23 @@
-package com.example.android.thehood;
+package com.example.android.thehood.ListViews;
 
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
-import java.util.List;
+import com.example.android.thehood.R;
 
 
-public class ViewPostsActivity extends FragmentActivity {
+public class ViewEventActivity extends FragmentActivity{
 
-    ViewPostsFragment mViewPostsFragment;
+    ViewEventFragment mViewEventFragment;
 
     @Override
     public void onBackPressed() {
         Log.v("BASKFLds", " back pressed");
-        if (mViewPostsFragment.popWindow != null && mViewPostsFragment.popWindow.isShowing()) {
-            mViewPostsFragment.popWindow.dismiss();
+        if (mViewEventFragment.popWindow != null && mViewEventFragment.popWindow.isShowing()) {
+            mViewEventFragment.popWindow.dismiss();
         } else {
             super.onBackPressed();
         }
@@ -42,11 +28,11 @@ public class ViewPostsActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.eactivity_vi);
-        mViewPostsFragment = new ViewPostsFragment();
+        setContentView(R.layout.activity_view_event);
+        mViewEventFragment = new ViewEventFragment();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, mViewPostsFragment)
+                    .add(R.id.container, mViewEventFragment)
                     .commit();
         }
     }
@@ -55,7 +41,7 @@ public class ViewPostsActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_view_posts, menu);
+        getMenuInflater().inflate(R.menu.menu_view_event, menu);
         return true;
     }
 
@@ -73,7 +59,4 @@ public class ViewPostsActivity extends FragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
 }

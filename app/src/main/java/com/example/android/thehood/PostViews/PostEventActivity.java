@@ -1,37 +1,22 @@
-package com.example.android.thehood;
+package com.example.android.thehood.PostViews;
 
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
-public class ViewEventActivity extends FragmentActivity{
-
-    ViewEventFragment mViewEventFragment;
-
-    @Override
-    public void onBackPressed() {
-        Log.v("BASKFLds", " back pressed");
-        if (mViewEventFragment.popWindow != null && mViewEventFragment.popWindow.isShowing()) {
-            mViewEventFragment.popWindow.dismiss();
-        } else {
-            super.onBackPressed();
-        }
-    }
+import com.example.android.thehood.R;
 
 
+public class PostEventActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_event);
-        mViewEventFragment = new ViewEventFragment();
+        setContentView(R.layout.activity_post_event);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, mViewEventFragment)
+                    .add(R.id.container, new PostEventFragment())
                     .commit();
         }
     }
@@ -40,7 +25,7 @@ public class ViewEventActivity extends FragmentActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_view_event, menu);
+        getMenuInflater().inflate(R.menu.menu_post, menu);
         return true;
     }
 

@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.thehood.PostEventActivity$PlaceholderFragment"
+    tools:context="com.example.android.thehood.PostViews.PostEventActivity$PlaceholderFragment"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -114,40 +114,6 @@
                 android:focusableInTouchMode="false"
                 android:textColor="#eca23b" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/linearLayout">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/set_radius"
-                android:id="@+id/set_radius_textview"
-                android:layout_weight="1" />
-
-            <EditText
-                android:layout_width="64dp"
-                android:layout_height="wrap_content"
-                android:maxLength="3"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/radius_input_field"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/radius_units"
-                android:id="@+id/radius_units_textview"
-                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout

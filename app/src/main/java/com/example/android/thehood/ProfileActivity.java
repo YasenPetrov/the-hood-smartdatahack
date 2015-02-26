@@ -2,6 +2,7 @@ package com.example.android.thehood;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -105,6 +106,7 @@ public class ProfileActivity extends Activity {
             nameTextView.setText(fullName);
         }
         loginOrLogoutButton.setText(R.string.profile_logout_button_label);
+        loginOrLogoutButton.setBackgroundColor(Color.RED);
         launchAppButton.setVisibility(View.VISIBLE);
     }
 
@@ -116,6 +118,7 @@ public class ProfileActivity extends Activity {
         emailTextView.setText("");
         nameTextView.setText("");
         loginOrLogoutButton.setText(R.string.profile_login_button_label);
+        loginOrLogoutButton.setBackgroundColor(Color.GREEN);
         launchAppButton.setVisibility(View.INVISIBLE);
     }
 }

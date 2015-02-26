@@ -9,6 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.android.thehood.ListViews.ViewEventActivity;
+import com.example.android.thehood.ListViews.ViewPostsActivity;
+import com.example.android.thehood.PostViews.PostEventActivity;
+import com.example.android.thehood.PostViews.PostMessageActivity;
+
 
 public class MainPage extends ActionBarActivity {
     private String LOG_TAG = MainPage.class.getSimpleName();

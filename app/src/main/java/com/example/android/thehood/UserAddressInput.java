@@ -44,7 +44,7 @@ public class UserAddressInput extends FragmentActivity {
         mGPSLocationButton.setVisibility(View.INVISIBLE);
         //GPS stuff
         final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-        if ( manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+        if ( mMap != null) {
             mMap.setMyLocationEnabled(true);
             mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
@@ -64,7 +64,12 @@ public class UserAddressInput extends FragmentActivity {
                         Log.v(LOG_TAG, "Lon from GPS: " + String.valueOf(longitude));
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MY_LOCATION_ZOOM));
                     } else {
-                        showNoLocationToast();
+                        if (manager.isProviderEnabled( LocationManager.GPS_PROVIDER )) {
+                            showNoLocationToast();
+                        }
+                        else {
+                            showTurnOnGPSToast();
+                        }
                     }
                     return true;
                 };
@@ -83,7 +88,11 @@ public class UserAddressInput extends FragmentActivity {
     }
 
     private void showNoLocationToast() {
-        Toast.makeText(this, "No GPS location found, try again", Toast.LENGTH_SHORT)
+        Toast.makeText(this, "No GPS location found, try again in a few seconds", Toast.LENGTH_SHORT)
+                .show();
+    }
+    private void showTurnOnGPSToast() {
+        Toast.makeText(this, "Turn on your GPS and try again", Toast.LENGTH_SHORT)
                 .show();
     }
 
@@ -151,32 +160,6 @@ public class UserAddressInput extends FragmentActivity {
                 Intent intent = new Intent(v.getContext(), MainPage.class);
                 UserAddressInput.this.finish();
                 startActivity(intent);
-            }
-        });
-    }
-    private void setUpGPSButton(){
-        mGPSLocationButton.setVisibility(View.INVISIBLE);
-        mGPSLocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-                //check if GPS enabled TODO
-                //manager.requestSingleUpdate();
-                Location location = manager.getLastKnownLocation(manager.PASSIVE_PROVIDER);
-                if (location != null) {
-                    double longitude = location.getLongitude();
-                    double latitude = location.getLatitude();
-                    final ParseGeoPoint userAddress = new ParseGeoPoint(latitude, longitude);
-                    Log.v(LOG_TAG, "Lat from GPS: " + String.valueOf(latitude));
-                    Log.v(LOG_TAG, "Lon from GPS: " + String.valueOf(longitude));
-                    currentUser.put("Address", userAddress);
-                    currentUser.saveInBackground();
-                    Intent intent = new Intent(v.getContext(), MainPage.class);
-                    UserAddressInput.this.finish();
-                    startActivity(intent);
-                } else {
-                    Log.v(LOG_TAG, "No last known location from GPS, try again.");
-                }
             }
         });
     }

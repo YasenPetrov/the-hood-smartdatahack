@@ -1,12 +1,9 @@
-package com.example.android.thehood;
+package com.example.android.thehood.HoodClasses;
 
 import com.parse.ParseClassName;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import java.util.Date;
 
 /**
  * Created by yasen on 19/02/15.
