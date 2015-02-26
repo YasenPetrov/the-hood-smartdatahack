@@ -99,6 +99,7 @@ public class UserAddressInput extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //change
         setUpMapIfNeeded();
     }
 
