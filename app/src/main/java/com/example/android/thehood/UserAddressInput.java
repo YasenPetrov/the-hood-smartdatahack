@@ -154,30 +154,4 @@ public class UserAddressInput extends FragmentActivity {
             }
         });
     }
-    private void setUpGPSButton(){
-        mGPSLocationButton.setVisibility(View.INVISIBLE);
-        mGPSLocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-                //check if GPS enabled TODO
-                //manager.requestSingleUpdate();
-                Location location = manager.getLastKnownLocation(manager.PASSIVE_PROVIDER);
-                if (location != null) {
-                    double longitude = location.getLongitude();
-                    double latitude = location.getLatitude();
-                    final ParseGeoPoint userAddress = new ParseGeoPoint(latitude, longitude);
-                    Log.v(LOG_TAG, "Lat from GPS: " + String.valueOf(latitude));
-                    Log.v(LOG_TAG, "Lon from GPS: " + String.valueOf(longitude));
-                    currentUser.put("Address", userAddress);
-                    currentUser.saveInBackground();
-                    Intent intent = new Intent(v.getContext(), MainPage.class);
-                    UserAddressInput.this.finish();
-                    startActivity(intent);
-                } else {
-                    Log.v(LOG_TAG, "No last known location from GPS, try again.");
-                }
-            }
-        });
-    }
 }
