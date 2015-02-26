@@ -44,7 +44,7 @@ public class UserAddressInput extends FragmentActivity {
         mGPSLocationButton.setVisibility(View.INVISIBLE);
         //GPS stuff
         final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-        if ( manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+        if ( mMap != null) {
             mMap.setMyLocationEnabled(true);
             mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
@@ -64,7 +64,12 @@ public class UserAddressInput extends FragmentActivity {
                         Log.v(LOG_TAG, "Lon from GPS: " + String.valueOf(longitude));
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, MY_LOCATION_ZOOM));
                     } else {
-                        showNoLocationToast();
+                        if (manager.isProviderEnabled( LocationManager.GPS_PROVIDER )) {
+                            showNoLocationToast();
+                        }
+                        else {
+                            showTurnOnGPSToast();
+                        }
                     }
                     return true;
                 };
@@ -83,13 +88,18 @@ public class UserAddressInput extends FragmentActivity {
     }
 
     private void showNoLocationToast() {
-        Toast.makeText(this, "No GPS location found, try again", Toast.LENGTH_SHORT)
+        Toast.makeText(this, "No GPS location found, try again in a few seconds", Toast.LENGTH_SHORT)
+                .show();
+    }
+    private void showTurnOnGPSToast() {
+        Toast.makeText(this, "Turn on your GPS and try again", Toast.LENGTH_SHORT)
                 .show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        //change
         setUpMapIfNeeded();
     }
 

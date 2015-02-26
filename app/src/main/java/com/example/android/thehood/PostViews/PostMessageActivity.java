@@ -1,29 +1,30 @@
-package com.example.android.thehood;
+package com.example.android.thehood.PostViews;
 
-import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.android.thehood.R;
 
-public class PostEventActivity extends FragmentActivity {
+
+public class PostMessageActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_event);
+        setContentView(R.layout.activity_post_message);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PostEventFragment())
+                    .add(R.id.containerMessage, new PostMessageFragment())
                     .commit();
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_post, menu);
+        getMenuInflater().inflate(R.menu.menu_post_message, menu);
         return true;
     }
 

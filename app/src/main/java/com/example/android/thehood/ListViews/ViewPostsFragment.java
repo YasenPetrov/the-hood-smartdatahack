@@ -1,4 +1,4 @@
-package com.example.android.thehood;
+package com.example.android.thehood.ListViews;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +19,10 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.android.thehood.HoodClasses.HoodComment;
+import com.example.android.thehood.HoodClasses.HoodPost;
+import com.example.android.thehood.R;
+import com.example.android.thehood.Utility;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;

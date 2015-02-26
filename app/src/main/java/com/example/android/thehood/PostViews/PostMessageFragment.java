@@ -1,4 +1,4 @@
-package com.example.android.thehood;
+package com.example.android.thehood.PostViews;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.thehood.HoodClasses.HoodPost;
+import com.example.android.thehood.R;
+import com.example.android.thehood.Utility;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,7 +25,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.util.Calendar;
@@ -73,8 +75,8 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                 R.array.hours_array, android.R.layout.simple_spinner_item);
         hours_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hours_spinner.setAdapter(hours_adapter);
-        radiusUnitTextView = (TextView) rootView.findViewById(R.id.radius_units_textview);
-        setDistanceUnits();
+        //radiusUnitTextView = (TextView) rootView.findViewById(R.id.radius_units_textview);
+        //setDistanceUnits();
         return rootView;
     }
 
@@ -153,16 +155,16 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                 .getText().toString();
         //want this to be double converted depending if MIles or KIlometres
 
-        String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_fieldMessage))
-                .getText().toString();
-        double radius = Utility.formatDistance(getActivity(), radiusString); //returns 0.0 if empty string
+        //String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_fieldMessage))
+        //        .getText().toString();
+        //double radius = Utility.formatDistance(getActivity(), radiusString); //returns 0.0 if empty string
 
         //gets the duration of a post from both spinners
         int duration = (Integer.parseInt(days_spinner.getSelectedItem().toString()))*24 +
                 Integer.parseInt(hours_spinner.getSelectedItem().toString());
         Log.v(LOG_TAG, String.valueOf(duration));
 
-        boolean valid = validatePostData(title, radius, description, duration);
+        boolean valid = validatePostData(title, description, duration);
 
         if(valid) {
             ParseUser currentUser = ParseUser.getCurrentUser();
@@ -173,12 +175,9 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
             post.setLocation(new ParseGeoPoint(eventLatLng.latitude, eventLatLng.longitude));
             post.setTitle(title);
             post.setDescription(description);
-            post.setRadius(radius);
             post.setAuthor(currentUser);
             currentUser.add("posts", post);
-            //add date
             Calendar cal = Calendar.getInstance();
-            //Date created_at = cal.getTime();
             cal.add(Calendar.HOUR_OF_DAY, duration);
             Date ends_at = cal.getTime();
             post.setEndTime(ends_at);
@@ -188,14 +187,9 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
         return false;
     }
 
-    private boolean validatePostData(String title, double radius, String description, int duration) {
+    private boolean validatePostData(String title, String description, int duration) {
         if (title.isEmpty()) {
             Toast.makeText(getActivity(), "An event without a title? Come on...", Toast.LENGTH_SHORT)
-                    .show();
-            return false;
-        }
-        else if (radius == 0.0) {
-            Toast.makeText(getActivity(),"Add a radius",Toast.LENGTH_SHORT)
                     .show();
             return false;
         }
@@ -209,19 +203,18 @@ public class PostMessageFragment extends android.support.v4.app.Fragment {
                     .show();
             return false;
         }
-        // TODO: Decide on a maximum radius and perform a validation on that
         return true;
     }
 
     @Override
     public void onResume() {
-        setDistanceUnits();
+        //setDistanceUnits();
         super.onResume();
     }
 
-    private void setDistanceUnits(){
-        radiusUnitTextView.setText(Utility.getPreferredDistanceUnits(getActivity()));
-    }
+    //private void setDistanceUnits(){
+    //    radiusUnitTextView.setText(Utility.getPreferredDistanceUnits(getActivity()));
+    //}
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.

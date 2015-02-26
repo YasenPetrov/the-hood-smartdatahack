@@ -1,4 +1,4 @@
-package com.example.android.thehood;
+package com.example.android.thehood.PostViews;
 
 
 import android.app.DatePickerDialog;
@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.android.thehood.HoodClasses.HoodEvent;
+import com.example.android.thehood.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -67,8 +69,8 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_post_event, container, false);
         registerViews(rootView);
-        radiusUnitTextView = (TextView) rootView.findViewById(R.id.radius_units_textview);
-        setDistanceUnits();
+        //radiusUnitTextView = (TextView) rootView.findViewById(R.id.radius_units_textview);
+        //setDistanceUnits();
         startDateSet = false; startTimeSet = false; endDateSet = false; endTimeSet = false;
         setStartEndDates();
 
@@ -196,12 +198,17 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
 
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            String timeText = new String();
+            String timeText;
             switch (viewCalledFrom.getId()) {
                 case R.id.pick_start_time_button:
                     startDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     startDate.set(Calendar.MINUTE, minute);
                     timeText = sdf_time.format(startDate.getTime());
+                    //TODO: check if works
+                    if (!endDateSet){
+                        endDate = (Calendar) startDate.clone();
+                        endDate.add(Calendar.MINUTE, SUGGESTED_DURATION);
+                    }
                     startTimeSet = true;
                     break;
                 default:
@@ -254,7 +261,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
 
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            String DateText = new String();
+            String DateText;
             switch (viewCalledFrom.getId()) {
                 case R.id.pick_start_date_button:
                     startDate.set(Calendar.YEAR, year);
@@ -296,11 +303,11 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         String description = ((TextView) getActivity()
                 .findViewById(R.id.description_input_field))
                 .getText().toString();
-        String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_field))
-                        .getText().toString();
-        double radius = Utility.formatDistance(getActivity(), radiusString); //returns 0.0 if empty string
+ //       String radiusString = ((TextView) getActivity().findViewById(R.id.radius_input_field))
+ //                       .getText().toString();
+//        double radius = Utility.formatDistance(getActivity(), radiusString); //returns 0.0 if empty string
 
-        boolean valid = validateEventData(title, startDate, endDate, radius, description);
+        boolean valid = validateEventData(title, startDate, endDate, description);
 
         if(valid) {
             ParseUser currentUser = ParseUser.getCurrentUser();
@@ -313,7 +320,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
             event.put("description", description);
             event.put("startDate", startDate.getTime());
             event.put("endDate", endDate.getTime());
-            event.put("visibility_radius", radius);
+//            event.put("visibility_radius", radius);
             event.put("author", currentUser);
             currentUser.add("events", event);
             event.saveInBackground();
@@ -322,8 +329,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         return false;
     }
 
-    private boolean validateEventData(String title, Calendar startDate, Calendar endDate,
-                                      double radius, String description) {
+    private boolean validateEventData(String title, Calendar startDate, Calendar endDate, String description) {
         if(title.isEmpty()) {
             Toast.makeText(getActivity(),"An event without a title? Come on...",Toast.LENGTH_SHORT)
                     .show();
@@ -332,12 +338,9 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
             Toast.makeText(getActivity(),"Set all dates and times", Toast.LENGTH_SHORT)
                 .show();
             return false;
+        //TODO: Change this to show more precise toasts
         } else if(startDate.after(endDate) || startDate.before(Calendar.getInstance())) {
             Toast.makeText(getActivity(),"Time travellers not allowed",Toast.LENGTH_SHORT)
-                    .show();
-            return false;
-        } else if (radius == 0.0) { //we might wanna to check for max radius
-            Toast.makeText(getActivity(),"Enter a radius, por favor",Toast.LENGTH_SHORT)
                     .show();
             return false;
         }
@@ -347,7 +350,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
     @Override
     public void onResume() {
         startDateSet = false; startTimeSet = false; endDateSet = false; endTimeSet = false;
-        setDistanceUnits();
+        //setDistanceUnits();
         setStartEndDates();
         super.onResume();
     }
@@ -359,7 +362,7 @@ public class PostEventFragment extends android.support.v4.app.Fragment {
         endDate.add(Calendar.MINUTE, START_DELAY + SUGGESTED_DURATION);
     }
 
-    private void setDistanceUnits(){
-        radiusUnitTextView.setText(Utility.getPreferredDistanceUnits(getActivity()));
-    }
+    //private void setDistanceUnits(){
+    //    radiusUnitTextView.setText(Utility.getPreferredDistanceUnits(getActivity()));
+    //}
 }

@@ -1,31 +1,47 @@
-package com.example.android.thehood;
+package com.example.android.thehood.ListViews;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.android.thehood.R;
 
-public class PostMessageActivity extends FragmentActivity {
+
+public class ViewPostsActivity extends FragmentActivity {
+
+    ViewPostsFragment mViewPostsFragment;
+
+    @Override
+    public void onBackPressed() {
+        Log.v("BASKFLds", " back pressed");
+        if (mViewPostsFragment.popWindow != null && mViewPostsFragment.popWindow.isShowing()) {
+            mViewPostsFragment.popWindow.dismiss();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_message);
+        setContentView(R.layout.eactivity_vi);
+        mViewPostsFragment = new ViewPostsFragment();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.containerMessage, new PostMessageFragment())
+                    .add(R.id.container, mViewPostsFragment)
                     .commit();
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_post_message, menu);
+        getMenuInflater().inflate(R.menu.menu_view_posts, menu);
         return true;
     }
 
@@ -43,4 +59,7 @@ public class PostMessageActivity extends FragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

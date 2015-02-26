@@ -24,6 +24,8 @@ public class SettingsActivity extends PreferenceActivity
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.pref_general);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_radius_key)));
+            ///bindRadiusSummaryToValue();
     // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
     // updated when the preference changes.
     // TODO: Add preference
@@ -41,6 +43,26 @@ public class SettingsActivity extends PreferenceActivity
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
     }
+//    private void bindRadiusSummaryToValue(){
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        Preference preference = findPreference(getString(R.string.pref_radius_key));
+//        //preference.setOnPreferenceChangeListener(this);
+//        String units;
+//        String unitType = prefs.getString(
+//                this.getString(R.string.pref_units_key),
+//                this.getString(R.string.pref_units_imperial));
+//        if (unitType == this.getString(R.string.pref_units_imperial)){
+//            units = " miles";
+//        }
+//        else {
+//            units = " kilometres";
+//        }
+//        preference.setOnPreferenceChangeListener(this);
+//        onPreferenceChange(preference, PreferenceManager
+//                .getDefaultSharedPreferences(preference.getContext())
+//                .getString(preference.getKey(), "") + units);
+//
+//    }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
